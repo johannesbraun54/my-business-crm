@@ -1,0 +1,43 @@
+.map-container{
+    border-radius: 8px !important;
+    height: 300px;
+    z-index: 2;
+    position: relative;
+    background-color: white;
+    border: 8px solid white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 32px;
+}
+
+.custom-infowindow {
+    color: black;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  map-info-window{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    >img{
+        width: 40px;
+    }
+    >p{
+      cursor: pointer;
+    }
+  }
+
+.chart-container{
+  width: 100%;
+  height: 45%;
+  object-fit: cover;
+  >canvas{
+    height: 100px;
+    width: 100px;
+  }
+}

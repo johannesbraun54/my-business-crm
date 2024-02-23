@@ -1,0 +1,22 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<h2 mat-dialog-title>Add Meal</h2>
+<mat-dialog-content>
+    <div class="dialogwindow">
+        <mat-form-field class="mr-16">
+            <mat-label>Meal</mat-label>
+            <input [disabled]="loading" [(ngModel)]="meal.mealName" matInput placeholder="Ex. Pizza" value="Sushi">
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always">
+            <mat-label>Amount</mat-label>
+            <input [disabled]="loading" [(ngModel)]="meal.price" matInput  class="example-right-align" placeholder="0">
+            <span matTextPrefix>€&nbsp;</span>
+          </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)=" this.dialogRef.close()" mat-button>Cancel</button>
+  <button mat-button (click)="saveMeal()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+

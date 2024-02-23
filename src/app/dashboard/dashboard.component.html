@@ -1,0 +1,23 @@
+<div #map class="map-container">
+    <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
+        <ng-container *ngFor="let location of userService.locations">
+            <map-marker  #marker="mapMarker" [position]="location.position" title="{{ location.title }}" (mapClick)="openInfoWindow(marker,infoWindow, location)"></map-marker>
+            <map-info-window #infoWindow="mapInfoWindow">
+                    <img src="../../assets/img/userProfile.png">
+                    <span>
+                        {{location.content.name}}<br>
+                        {{location.content.adress}}<br>
+                        {{ location.content.street}}<br>
+                        <a [routerLink]="['/user/' + location.content.customUserId]">zum Kundenprofil</a> 
+                    </span>
+            </map-info-window>
+        </ng-container>
+    </google-map>
+</div>
+
+<div class="chart-container">
+    <canvas id="canvas"  height="100px" width="100px">{{chart}}</canvas>
+</div>
+  
+
+

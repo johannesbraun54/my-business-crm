@@ -1,0 +1,18 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<h2 mat-dialog-title>Edit Meal</h2>
+<mat-dialog-content>
+
+    <div class="dialogwindow">
+        <mat-form-field class="full-width">
+            <mat-label>Leave a description</mat-label>
+            <textarea [disabled]="loading" [(ngModel)]="description" matInput placeholder="This Meal is…"></textarea>
+          </mat-form-field>
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="dialogRef.close()" mat-button>Cancel</button>
+  <button mat-button (click)="saveMeal()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+

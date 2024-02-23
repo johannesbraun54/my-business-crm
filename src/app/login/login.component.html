@@ -1,0 +1,33 @@
+<div class="signUp-link">
+    Dont have an account ? <a href="signUp">Sign up</a>
+</div>
+
+<div class="login-container">
+
+    <div class="login-form">
+        <div class="headline">
+            <h1>Log in</h1>
+        </div>
+        
+        <mat-form-field>
+            <mat-label>Enter your email</mat-label>
+            <input [(ngModel)]="authService.account.email" matInput placeholder="yourmail@example.com" [formControl]="email" required>
+            @if (email.invalid) {
+              <mat-error>{{getErrorMessage()}}</mat-error>
+            }
+          </mat-form-field>
+        
+        
+        <mat-form-field>
+            <mat-label>Enter your password</mat-label>
+            <input [(ngModel)]="authService.account.password" matInput [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button mat-raised-button (click)="login()"  color="primary">Log in</button>
+    </div>
+</div>
+
+
