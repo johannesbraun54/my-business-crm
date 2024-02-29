@@ -29,6 +29,11 @@ export class userService {
     
   
     constructor(public firestore: Firestore){
+      if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+        this.geocoder = new google.maps.Geocoder(); 
+      } else {
+        console.error('Google Maps API is not available.');
+      }
         this.unsubUser = this.userListSnap();
     }
 
@@ -46,7 +51,7 @@ export class userService {
               this.getUserCoordinates(userAdress, userData)
             })
             this.contentloaded = true
-            console.log(this.allUsers);
+            console.log(this.allUsers[0].purchases[1]);
           })
     }
 

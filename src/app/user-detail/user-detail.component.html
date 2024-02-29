@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-content  class="user-detail-header">
+    <mat-card-content class="user-detail-header">
         <img src="../../assets/img/userProfile.png">
         <div class="user-details">
             <h2>{{ user.firstName}} {{ user.lastName}}</h2><br>
@@ -10,7 +10,7 @@
             <mat-icon>more_vert</mat-icon>
         </button>
 
-        <mat-menu #editUserDetails="matMenu" >
+        <mat-menu #editUserDetails="matMenu">
             <button mat-menu-item (click)="editUser()">Edit</button>
         </mat-menu>
     </mat-card-content>
@@ -52,24 +52,41 @@
     <mat-card-content>
         <google-map height="200px" width="100%" [center]="userService.position" [zoom]="zoom">
             <ng-container>
-                <map-marker  #marker="mapMarker" [position]="userService.position" title="{{ location.title }}"></map-marker>
+                <map-marker #marker="mapMarker" [position]="userService.position"
+                    title="{{ location.title }}"></map-marker>
             </ng-container>
-        </google-map> 
+        </google-map>
     </mat-card-content>
 </mat-card>
 
-<div class="mt-32">
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{user.purchases.purchaseTime}}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{user.purchases.totalAmount}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>{{user.purchases.products}}</p>
-  </mat-expansion-panel>
-</div>
 
+<div class="mt-32">
+    <mat-expansion-panel *ngFor="let purchase of userPurchases" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
+
+
+        <mat-expansion-panel-header>
+
+            <mat-panel-title>
+                {{purchase.purchaseTime}}
+            </mat-panel-title>
+
+            <mat-panel-description>
+                {{purchase.totalAmount}}€
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <div class="purchase-detail" *ngFor="let product of purchase.products; let i = index">
+            <span>
+                {{purchase.amounts[i]}}
+                {{product['mealName']}}
+            </span>
+            <span>
+                {{purchase.prices[i]}}€
+            </span>
+        </div>
+
+
+    </mat-expansion-panel>
+</div>

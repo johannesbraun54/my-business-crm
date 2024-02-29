@@ -29,3 +29,13 @@
     right: 0;
     top: 0;
 }
+
+.mat-expansion-panel-header-description {
+    flex-grow: 0;
+}
+
+.purchase-detail{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
