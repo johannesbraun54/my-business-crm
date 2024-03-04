@@ -41,36 +41,68 @@ export class UserDetailComponent implements OnInit {
   location =
     { position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier', content: {} };
   panelOpenState = false;
-  userPurchases:any = [];
+  userPurchases: any = [];
+  totalAmountsFromUser: number[] = [];
+  totalRevenue: number[] = [];
 
   constructor(public route: ActivatedRoute, public firestore: Firestore, public dialog: MatDialog, public userService: userService) {
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getUser(this.paramId);
-    
+
   }
 
-  getPurchase(purchase:any){
-    console.log('current purchase', purchase);
-  }
-
-  ngOnInit(): void {
-    console.log('try',this.user);
-  }
+  ngOnInit(): void { }
 
   getUser(docId: string) {
     this.userPurchases = [];
     this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
       this.user = new User(user.data());
-      console.log('get user',this.user )
       this.userService.getSingleUserCoordinates(this.user);
-      this.user.purchases[0].forEach((purchase:Purchase) => {
+      this.user.purchases[0].forEach((purchase: Purchase) => {
         this.userPurchases.push(purchase);
       })
+      this.getTotalAmounts();
+      this.getTotalPrice();
     });
 
-    console.log('try',this.userPurchases);
   }
 
+  getTotalPrice() {
+    this.totalRevenue = [];
+    for (let i = 0; i < this.userPurchases.length; i++) {
+      const prices = this.userPurchases[i].prices;
+      prices.forEach((price: number) => {
+        this.totalRevenue.push(price);
+      })
+    }
+    this.getTotalSumOfPrices();
+  }
+
+  getTotalSumOfPrices() {
+    let sum = 0;
+    for (let num of this.totalRevenue) {
+      sum += num
+    }
+    return sum
+  }
+
+  getTotalAmounts() {
+    for (let i = 0; i < this.userPurchases.length; i++) {
+      const amounts = this.userPurchases[i].amounts;
+      amounts.forEach((amount: number) => {
+        this.totalAmountsFromUser.push(amount);
+      })
+    }
+    this.getAmountOfBoughtProducts()
+  }
+
+  getAmountOfBoughtProducts() {
+    let sum = 0;
+    for (let num of this.totalAmountsFromUser) {
+      sum += num
+    }
+    return sum
+  }
 
   editAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);

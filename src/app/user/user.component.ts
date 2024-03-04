@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,14 +23,16 @@ import { userService } from '../service/userService.service';
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   contentloaded = false;
 
 
-  constructor(public dialog: MatDialog,  public userService : userService){
-
+  constructor(public dialog: MatDialog,  public userService : userService){}
+  ngOnInit(): void {
     this.userService.userListSnap();
   }
+
+
 
 
 

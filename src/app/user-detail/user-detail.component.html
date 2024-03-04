@@ -59,34 +59,83 @@
     </mat-card-content>
 </mat-card>
 
-
 <div class="mt-32">
-    <mat-expansion-panel *ngFor="let purchase of userPurchases" (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
-
-
+    <mat-expansion-panel (opened)="panelOpenState = false" (closed)="panelOpenState = true">
         <mat-expansion-panel-header>
 
             <mat-panel-title>
-                {{purchase.purchaseTime}}
+                Gesamtüberblick des Kunden
             </mat-panel-title>
 
             <mat-panel-description>
-                {{purchase.totalAmount}}€
+
             </mat-panel-description>
 
         </mat-expansion-panel-header>
 
-        <div class="purchase-detail" *ngFor="let product of purchase.products; let i = index">
+        <div class="purchase-detail">
             <span>
-                {{purchase.amounts[i]}}
-                {{product['mealName']}}
+                Anzahl Bestellungen:
             </span>
             <span>
-                {{purchase.prices[i]}}€
+                {{userPurchases.length}}
             </span>
         </div>
+        <div class="purchase-detail">
+            <span>
+                Gekaufte Produkte:
+            </span>
+            <span>
+                {{ getAmountOfBoughtProducts()}}
+            </span>
+        </div>
+        <div class="purchase-detail">
+            <span>
+                Gesamt Umsatz:
+            </span>
+            <span>
+                {{ getTotalSumOfPrices().toFixed(2) }}€
+            </span>
+        </div>
+    </mat-expansion-panel>
+</div>
 
 
+
+<div class="mt-32 mb-32">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+
+            <mat-panel-title>
+                Bestellungen
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="mt-32" *ngFor="let purchase of userPurchases">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+        
+                    <mat-panel-title>
+                        {{purchase.purchaseTime}}
+                    </mat-panel-title>
+        
+                    <mat-panel-description>
+                        Gesamtpreis:
+                        {{purchase.totalAmount.toFixed(2)}}€
+                    </mat-panel-description>
+        
+                </mat-expansion-panel-header>
+        
+                <div class="purchase-detail" *ngFor="let product of purchase.products; let i = index">
+                    <span>
+                        {{purchase.amounts[i]}}
+                        {{product['mealName']}}
+                    </span>
+                    <span>
+                        {{purchase.prices[i].toFixed(2)}}€
+                    </span>
+                </div>
+            </mat-expansion-panel>
+        </div>
     </mat-expansion-panel>
 </div>
