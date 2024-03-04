@@ -9,7 +9,12 @@ import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.compo
 import {MatCardModule} from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { DialogAddMealComponent } from '../dialog-add-meal/dialog-add-meal.component';
-import { Firestore, collection, doc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot } from '@angular/fire/firestore'; 
+import { userService } from '../service/userService.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +26,11 @@ import { Firestore, collection, doc, onSnapshot } from '@angular/fire/firestore'
     MatDialogModule,
     DialogAddUserComponent,
     MatCardModule,
-    RouterLink],
+    RouterLink,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
@@ -29,7 +38,7 @@ export class ProductsComponent {
   mealsnap;
   allMeals:any = [];
   firestore: Firestore = inject(Firestore);
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog,public userService:userService){
 
     this.mealsnap = onSnapshot(this.getMealsRef(), (mealslist) => {
       this.allMeals = [];

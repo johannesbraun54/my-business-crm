@@ -12,6 +12,7 @@ export class User {
     customUserId: string;
     purchases: any = [];
     totalRevenue: number;
+    totalPurchasesAmount: number;
 
 
 
@@ -29,6 +30,7 @@ export class User {
             this.purchases.push(obj.purchases);
         }
         this.totalRevenue = obj? obj.totalRevenue : 0;
+        this.totalPurchasesAmount = obj? obj.totalPurchasesAmount : 0;
     }
 
     public toJson() {

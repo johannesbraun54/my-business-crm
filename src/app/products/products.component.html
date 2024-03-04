@@ -1,3 +1,7 @@
+<mat-form-field class="example-full-width">
+    <mat-label>Product suchen</mat-label>
+    <input [(ngModel)]="userService.searchTerm" (keyup)="userService.searchItem()" matInput placeholder="User oder Stadt suchen">
+  </mat-form-field>
 <mat-card>
     <mat-card-content>
         <table class="product-table">

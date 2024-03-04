@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { User } from "../models/user.class";
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, query, where } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,11 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 export class userService {
   user = new User();
   allUsers: any = []
+  searchedUsers: any = [];
   userPurchases: any = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
+  searchTerm!: string;
   geocoder = new google.maps.Geocoder();
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
@@ -40,8 +42,17 @@ export class userService {
     } else {
       console.error('Google Maps API is not available.');
     }
-    this.unsubUser = this.userListSnap().then(() => {
-    })
+    this.unsubUser = this.userListSnap();
+  }
+
+  searchItem() {
+      this.searchedUsers = this.allUsers.filter((user: User) => {
+        return (
+          user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          user.city.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      });
   }
 
   async userListSnap() {
@@ -55,7 +66,10 @@ export class userService {
         const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
         const userName = userData['firstName'] + " " + userData['lastName'];
         this.allUsers.push(userData);
-        this.getUserCoordinates(userAdress, userData)
+        this.getUserCoordinates(userAdress, userData);
+        if (this.searchTerm == undefined) {
+          this.searchedUsers = this.allUsers;
+        }
       })
       this.contentloaded = true
     })
@@ -66,20 +80,37 @@ export class userService {
     for (let i = 0; i < this.allUsers.length; i++) {
       let sum = 0;
       const user = this.allUsers[i];
-      for (let j = 0; j < user.purchases.length; j++) {
-        const purchase = user.purchases[j];
-        sum += purchase.totalAmount
-        user.totalRevenue = sum
-      }
+      this.getTotalRevenue(user ,sum);
+      this.getTotalPurchaseFromUser(user)
     }
     this.filterUser(myFilter)
+  }
+
+  getTotalRevenue(user:User ,sum:number){
+    for (let j = 0; j < user.purchases.length; j++) {
+      const purchase = user.purchases[j];
+      sum += purchase.totalAmount
+      user.totalRevenue = sum
+    }
+  }
+
+  getTotalPurchaseFromUser(user:User){
+    let sum = 0;
+    for (let j = 0; j < user.purchases.length; j++) {
+      const purchase = user.purchases[j];
+      for (let k = 0; k < purchase.amounts.length; k++) {
+        const amount = purchase.amounts[k];
+        sum += amount
+      }
+      user.totalPurchasesAmount = sum
+    }
   }
 
 
   filterUser(myFilter: string) {
     switch (myFilter) {
       case 'salesUp-1':
-        this.allUsers.sort((a: any, b: any) => {
+        this.searchedUsers.sort((a: any, b: any) => {
           if (a.totalRevenue && b.totalRevenue) {
             return a.totalRevenue - b.totalRevenue;
           } else {
@@ -88,13 +119,33 @@ export class userService {
         });
         break;
       case 'salesDown-2':
-        this.allUsers.sort((a: any, b: any) => {
+        this.searchedUsers.sort((a: any, b: any) => {
           if (a.totalRevenue && b.totalRevenue) {
             return b.totalRevenue - a.totalRevenue
           } else {
             return a.totalRevenue ? -1 : 1;
           }
         });
+        break;
+        case 'purchasesUp-3':
+        this.searchedUsers.sort((a: any, b: any) => {
+          if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
+            return a.totalPurchasesAmount - b.totalPurchasesAmount
+          } else {
+            return a.totalPurchasesAmount ? 1 : -1;
+          }
+        });
+          break;
+        case 'purchasesDown-4': 
+        this.searchedUsers.sort((a: any, b: any) => {
+          if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
+            return b.totalPurchasesAmount - a.totalPurchasesAmount
+          } else {
+            return a.totalPurchasesAmount ? -1 : 1;
+          }
+        });
+        break;
+
     }
   }
 
