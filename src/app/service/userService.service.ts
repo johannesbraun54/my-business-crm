@@ -9,10 +9,14 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 export class userService {
   user = new User();
   allUsers: any = []
+  userPurchases: any = [];
+  totalAmountsFromUser: number[] = [];
+  totalRevenue: number[] = [];
   geocoder = new google.maps.Geocoder();
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   contentloaded = false;
+  originalArray = [];
   locations = [
     {
       position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier',
@@ -36,7 +40,8 @@ export class userService {
     } else {
       console.error('Google Maps API is not available.');
     }
-    this.unsubUser = this.userListSnap();
+    this.unsubUser = this.userListSnap().then(() => {
+    })
   }
 
   async userListSnap() {
@@ -54,6 +59,43 @@ export class userService {
       })
       this.contentloaded = true
     })
+  }
+
+
+  structurateUserData(myFilter: string) {
+    for (let i = 0; i < this.allUsers.length; i++) {
+      let sum = 0;
+      const user = this.allUsers[i];
+      for (let j = 0; j < user.purchases.length; j++) {
+        const purchase = user.purchases[j];
+        sum += purchase.totalAmount
+        user.totalRevenue = sum
+      }
+    }
+    this.filterUser(myFilter)
+  }
+
+
+  filterUser(myFilter: string) {
+    switch (myFilter) {
+      case 'salesUp-1':
+        this.allUsers.sort((a: any, b: any) => {
+          if (a.totalRevenue && b.totalRevenue) {
+            return a.totalRevenue - b.totalRevenue;
+          } else {
+            return a.totalRevenue ? 1 : -1;
+          }
+        });
+        break;
+      case 'salesDown-2':
+        this.allUsers.sort((a: any, b: any) => {
+          if (a.totalRevenue && b.totalRevenue) {
+            return b.totalRevenue - a.totalRevenue
+          } else {
+            return a.totalRevenue ? -1 : 1;
+          }
+        });
+    }
   }
 
   getUserCoordinates(userAdress: string, userData: any) {

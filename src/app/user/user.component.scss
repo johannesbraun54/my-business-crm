@@ -1,9 +1,19 @@
 mat-card{
     padding-left: 0;
     padding-right: 0;
-
-
 }
+
+.search-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    #search {
+        width: 60%;
+        flex-grow: 1;
+    }
+}
+
+
 
 .dialog-add-btn{
     position: absolute;
