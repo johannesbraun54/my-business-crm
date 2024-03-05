@@ -1,41 +1,71 @@
-.dialog-add-btn{
+.dialog-add-btn {
     position: absolute;
     right: 56px;
     bottom: 32px;
 }
 
-.product-table{
+.material-icons {
+    line-height: 1.2;
+}
+
+.product-table {
     width: 100%;
     border-collapse: collapse;
-    tr {
-        border-bottom:1px solid rgba(0, 0, 0, 0.4);
 
-      
-        &:last-child{
+    tr {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+
+        &:last-child {
             border-bottom: 0;
         }
+
         cursor: pointer;
-        td{
+
+        td {
             height: 48px;
-            &:first-child{
+
+            &:first-child {
                 padding-left: 16px;
+            }
+
+            &:nth-child(3) {
+                width: 61px;
+
+                .mat-icon {
+                    display: none;
+                }
+
             }
         }
 
-        th{
-            &:first-child{
+        th {
+            &:first-child {
                 cursor: unset;
                 padding-left: 16px;
 
             }
         }
-        &:hover{
+
+        &:hover {
             background-color: rgba(0, 0, 0, 0.04);
+
+            td:nth-child(3){
+                .mat-icon {
+                    display: inline-table;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    &:hover{
+                        background-color: rgba(0, 0, 0, 0.08);
+                        border-radius: 20%;
+                    }
+                }
+            }
         }
     }
 
 
-    th{
+    th {
         color: #646464;
         font-size: 14px;
         font-weight: 500px;
@@ -43,9 +73,10 @@
     }
 }
 
-.cursor-unset{
-    cursor: unset!important;
-    &:hover{
-        background-color: unset!important;
+.cursor-unset {
+    cursor: unset !important;
+
+    &:hover {
+        background-color: unset !important;
     }
 }

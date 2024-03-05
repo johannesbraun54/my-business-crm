@@ -1,7 +1,7 @@
 <mat-form-field class="full-width">
     <mat-label>Product suchen</mat-label>
     <input [(ngModel)]="searchTerm" (keyup)="searchProduct()" matInput placeholder="User oder Stadt suchen">
-  </mat-form-field>
+</mat-form-field>
 <mat-card>
     <mat-card-content>
         <table class="product-table">
@@ -11,11 +11,12 @@
                     <th>Price</th>
                 </tr>
             </thead>
-            
+
             <tbody>
-                <tr *ngFor="let meal of searchedMeals"  [routerLink]="['/products/' + meal.mealId]">
+                <tr *ngFor="let meal of searchedMeals" [routerLink]="['/products/' + meal.mealId]">
                     <td>{{meal.mealName}}</td>
-                    <td>{{meal.price}}</td>
+                    <td>{{meal.price.toFixed(2)}}€</td>
+                    <td><mat-icon (click)="openDeleteDialog()">delete_forever</mat-icon></td>
                 </tr>
             </tbody>
         </table>
@@ -25,4 +26,3 @@
 <button (click)="openDialog()" class="dialog-add-btn" mat-fab color="primary" matTooltip="Add Meal">
     <mat-icon>add</mat-icon>
 </button>
-

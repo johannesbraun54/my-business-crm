@@ -51,7 +51,7 @@ export class ProductsComponent {
         const mealData = meal.data() as Meal;
         mealData['mealId'] = mealId;
         this.allMeals.push(mealData);
-        if(this.searchTerm == undefined){
+        if (this.searchTerm == undefined) {
           this.searchedMeals = this.allMeals;
         }
       })
@@ -62,6 +62,10 @@ export class ProductsComponent {
     this.searchedMeals = this.allMeals.filter(meal => {
       return meal.mealName.toLowerCase().includes(this.searchTerm.trim().toLowerCase());
     })
+  }
+
+  openDeleteDialog(){
+    
   }
 
   openDialog() {

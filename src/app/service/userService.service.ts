@@ -52,7 +52,7 @@ export class userService {
       userList.forEach(userSnap => {
         let customUserId = userSnap.get('customUserId');
         customUserId = userSnap.id;
-        const userData:User = userSnap.data() as User
+        const userData: User = userSnap.data() as User
         userData['customUserId'] = customUserId;
         const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
         this.allUsers.push(userData);
