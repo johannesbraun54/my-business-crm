@@ -1,15 +1,15 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-<h2 mat-dialog-title>Wollen Sie das Produkt wirklich löschen?</h2>
+<h2 mat-dialog-title>Wollen Sie den User wirklich löschen?</h2>
 <mat-dialog-content>
 
     <div class="dialogwindow">
-        Alle Daten des Produkts werden unwiderruflich gelöscht.
+        Alle Daten des Users werden unwiderruflich gelöscht.
     </div>
 
 
 </mat-dialog-content>
 <mat-dialog-actions>
   <button (click)="dialogRef.close()" mat-button>Cancel</button>
-  <button mat-button (click)="deleteMeal()" cdkFocusInitial>Delete</button>
+  <button mat-button (click)="deleteUser()" cdkFocusInitial>Delete</button>
 </mat-dialog-actions>
 

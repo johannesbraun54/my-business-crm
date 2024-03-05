@@ -14,9 +14,8 @@ import { Firestore, collection, deleteDoc, doc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { userService } from '../service/userService.service';
 
-
 @Component({
-  selector: 'app-dialog-delete-product',
+  selector: 'app-dialog-delete-user',
   standalone: true,
   imports: [CommonModule,
     MatDialogModule,
@@ -29,40 +28,26 @@ import { userService } from '../service/userService.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIcon],
-  templateUrl: './dialog-delete-product.component.html',
-  styleUrl: './dialog-delete-product.component.scss'
+  templateUrl: './dialog-delete-user.component.html',
+  styleUrl: './dialog-delete-user.component.scss'
 })
-export class DialogDeleteProductComponent {
+export class DialogDeleteUserComponent {
+  userId!: string;
   loading = false;
-  deleteMealId!:string;
-  firestore:Firestore = inject(Firestore);
+  firestore: Firestore = inject(Firestore);
 
-  constructor(public dialogRef: MatDialogRef<DialogDeleteProductComponent>,
-    private router:Router, public userService:userService) {
-
-   }
+  constructor(public dialogRef: MatDialogRef<DialogDeleteUserComponent>, public userService: userService, private router: Router) { }
 
 
-  async deleteMeal() {
-    this.userService.mealDeleted = true;
-    this.loading = true
-    await deleteDoc(this.getSingleMealRef()).catch(err => {
-      console.error(err);
+  async deleteUser() {
+    this.userService.userDeleted = true;
+    this.loading = true;
+    await deleteDoc(doc(this.userService.getUserRef(), this.userId)).catch(err => {
+      console.error(err)
     }).then(() => {
       this.loading = false;
       this.dialogRef.close();
-      this.router.navigate(['/products']);
+      this.router.navigate(['/user'])
     })
   }
-
-
-  getMealsRef() {
-    return collection(this.firestore, 'meals');
-  }
-
-  getSingleMealRef() {
-    let collRef = this.getMealsRef();
-    return doc(collRef,this.deleteMealId);
-  }
-
 }

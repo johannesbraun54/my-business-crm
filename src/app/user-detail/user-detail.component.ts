@@ -15,6 +15,7 @@ import { userService } from '../service/userService.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Purchase } from '../models/purchase.class';
+import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
 @Component({
   selector: 'app-user-detail',
   standalone: true,
@@ -36,12 +37,12 @@ export class UserDetailComponent implements OnInit {
   singleUser: any;
   user: User = new User();
   zoom = 7;
-  center!: any;
+  center!: number;
   geocoder = new google.maps.Geocoder();
   location =
     { position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier', content: {} };
   panelOpenState = false;
-  userPurchases: any = [];
+  userPurchases: Purchase[] = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
 
@@ -113,6 +114,11 @@ export class UserDetailComponent implements OnInit {
   editUser() {
     const dialog = this.dialog.open(DialogEditUserComponent);
     dialog.componentInstance.user = new User(this.user.toJson());
+    dialog.componentInstance.userId = this.paramId;
+  }
+
+  openDeleteDialog(){
+    let dialog = this.dialog.open(DialogDeleteUserComponent);
     dialog.componentInstance.userId = this.paramId;
   }
 

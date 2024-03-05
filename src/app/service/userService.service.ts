@@ -20,6 +20,7 @@ export class userService {
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   mealDeleted = false;
+  userDeleted = false;
   contentloaded = false;
   locations = [
     {
