@@ -1,3 +1,8 @@
+<div style="height: 50px;">
+    {{userService.februaryRevenue}}
+    {{userService.marchRevenue}}
+</div>
+
 <div #map class="map-container">
     <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
         <ng-container *ngFor="let location of userService.locations">
@@ -15,8 +20,13 @@
     </google-map>
 </div>
 
+
+
 <div class="chart-container">
-    <canvas id="canvas"  height="100px" width="100px">{{chart}}</canvas>
+    <canvas id="canvas">{{chart}}</canvas>
+</div>
+<div class="chart-container">
+    <canvas id="canvas">{{chart}}</canvas>
 </div>
   
 

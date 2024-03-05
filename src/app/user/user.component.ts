@@ -52,9 +52,10 @@ export class UserComponent implements OnInit {
   constructor(public dialog: MatDialog, public userService: userService) { }
   ngOnInit(): void {
     this.userService.userListSnap();
-    if(this.userService.contentloaded){
+    if (this.userService.contentloaded) {
       this.userService.searchUserDetail();
     }
+
   }
 
 

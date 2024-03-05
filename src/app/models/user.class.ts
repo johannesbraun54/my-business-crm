@@ -1,5 +1,4 @@
-import { Purchase } from "./purchase.class";
-import { Meal } from "./meal.class";
+
 
 export class User {
     firstName: string;

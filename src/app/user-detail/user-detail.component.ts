@@ -57,7 +57,9 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.userService.filterPurchasesByMonth();
+  }
 
   getUser(docId: string) {
     this.userPurchases = [];
@@ -122,7 +124,7 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.userId = this.paramId;
   }
 
-  openDeleteDialog(){
+  openDeleteDialog() {
     let dialog = this.dialog.open(DialogDeleteUserComponent);
     dialog.componentInstance.userId = this.paramId;
   }

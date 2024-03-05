@@ -1,7 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { User } from "../models/user.class";
-import { Firestore, collection, onSnapshot, query, where } from '@angular/fire/firestore';
-import { Meal } from "../models/meal.class";
+import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { Purchase } from "../models/purchase.class";
 import { Location } from "../models/locations.class";
 
@@ -16,8 +15,17 @@ export class userService {
   userPurchases: Purchase[] = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
+  januaryPurchases: Purchase[] = [];
+  januaryRevenue!:number; 
+  februaryPurchases: Purchase[] = [];
+  februaryRevenue!:number;
+  marchPurchases: Purchase[] = [];
+  marchRevenue!:number;
+  aprilPurchases: Purchase[] = [];
+  mayPurchases: Purchase[] = [];
+  junePurchases: Purchase[] = [];
   searchTerm!: string;
-  geocoder;   //= new google.maps.Geocoder();
+  geocoder;  
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   mealDeleted = false;
@@ -25,11 +33,7 @@ export class userService {
   contentloaded = false;
   newlocation = new Location();
   locations: Location[] = [];
-
-  //location = [{
-  //position: { lat: 0.0, lng: 0.0 }, title: 'Peter Altmaier'
-  //}]
-
+  statisticDataLoaded = false;
 
   constructor(public firestore: Firestore) {
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -55,8 +59,10 @@ export class userService {
         if (this.searchTerm == undefined) {
           this.searchedUsers = this.allUsers;
         }
+       // console.log('users',this.allUsers)
+        this.filterPurchasesByMonth();
       })
-      this.contentloaded = true
+      this.contentloaded = true;
     })
   }
 
@@ -183,10 +189,10 @@ export class userService {
             position: { lat: latitude, lng: longitude },
             title: userData.firstName,
             content: {
-                name: userData.firstName + " " + userData.lastName,
-                street: userData.street,
-                adress: userData.zipCode + " " + userData.city,
-                customUserId: userData.customUserId
+              name: userData.firstName + " " + userData.lastName,
+              street: userData.street,
+              adress: userData.zipCode + " " + userData.city,
+              customUserId: userData.customUserId
             }
           }
 
@@ -213,6 +219,45 @@ export class userService {
         }
       });
     }
+  }
+
+  filterPurchasesByMonth() {
+    this.januaryPurchases = [];
+    this.februaryPurchases = [];
+    this.marchPurchases = [];
+    for (let i = 0; i < this.allUsers.length; i++) {
+      const user = this.allUsers[i];
+      for (let j = 0; j < user.purchases.length; j++) {
+        const purchase = user.purchases[j];
+        const purchaseTime = purchase.purchaseTime;
+
+        if (purchaseTime.includes('Januar')) {
+          this.januaryPurchases.push(purchase);
+          this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
+        } else if (purchaseTime.includes('Februar')) {
+          this.februaryPurchases.push(purchase);
+          this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
+        } else if (purchaseTime.includes('März')) {
+          this.marchPurchases.push(purchase);
+          this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
+        } else if (purchaseTime.includes('April')){
+          this.aprilPurchases.push(purchase);
+        }
+      }
+    }
+    this.statisticDataLoaded = true;
+    //console.log('januaryTotalPurchases', this.januaryRevenue);
+    //console.log('februaryPurchases', this.februaryRevenue);
+    //console.log('marchPurchases', this.marchRevenue);
+  }
+
+  getMonthlyTotalRevenue(monthArray:Purchase[]){
+    let sum = 0;
+    for (let i = 0; i < monthArray.length; i++) {
+      const purchase = monthArray[i];
+      sum += purchase.totalAmount 
+    }
+    return sum
   }
 
   getUserRef() {
