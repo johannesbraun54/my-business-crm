@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!userService.mealDeleted">
     <mat-card-content  class="meal-detail-header">
         <button mat-icon-button  [matMenuTriggerFor]="editUserDetails">
             <mat-icon>more_vert</mat-icon>
@@ -11,11 +11,12 @@
 
         <mat-menu #editUserDetails="matMenu" >
             <button (click)="editMealHeader()" mat-menu-item>Edit</button>
+            <button mat-menu-item (click)="openDeleteDialog()">Delete Meal</button>
         </mat-menu>
     </mat-card-content>
 </mat-card>
 
-<mat-card class="mt-32">
+<mat-card *ngIf="!userService.mealDeleted" class="mt-32">
     <mat-card-header>
         <mat-card-title>
             Description
@@ -33,7 +34,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="mt-32">
+<mat-card *ngIf="!userService.mealDeleted" class="mt-32">
     <mat-card-header>
         <mat-card-title>
             Ingredients

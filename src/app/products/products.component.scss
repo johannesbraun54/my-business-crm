@@ -28,15 +28,6 @@
             &:first-child {
                 padding-left: 16px;
             }
-
-            &:nth-child(3) {
-                width: 61px;
-
-                .mat-icon {
-                    display: none;
-                }
-
-            }
         }
 
         th {
@@ -49,18 +40,6 @@
 
         &:hover {
             background-color: rgba(0, 0, 0, 0.04);
-
-            td:nth-child(3){
-                .mat-icon {
-                    display: inline-table;
-                    padding-left: 20px;
-                    padding-right: 20px;
-                    &:hover{
-                        background-color: rgba(0, 0, 0, 0.08);
-                        border-radius: 20%;
-                    }
-                }
-            }
         }
     }
 

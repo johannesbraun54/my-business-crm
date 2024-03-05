@@ -19,6 +19,7 @@ export class userService {
   geocoder = new google.maps.Geocoder();
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
+  mealDeleted = false;
   contentloaded = false;
   locations = [
     {

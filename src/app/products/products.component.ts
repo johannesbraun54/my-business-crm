@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Meal } from '../models/meal.class';
+import { DialogDeleteProductComponent } from '../dialog-delete-product/dialog-delete-product.component';
 
 @Component({
   selector: 'app-products',
@@ -41,6 +42,7 @@ export class ProductsComponent {
   searchedMeals: Meal[] = [];
   firestore: Firestore = inject(Firestore);
   searchTerm!: string;
+  mealId!:string;
   constructor(public dialog: MatDialog, public userService: userService) {
 
     this.mealsnap = onSnapshot(this.getMealsRef(), (mealslist) => {
@@ -50,6 +52,7 @@ export class ProductsComponent {
         mealId = meal.id;
         const mealData = meal.data() as Meal;
         mealData['mealId'] = mealId;
+        this.mealId = mealId;
         this.allMeals.push(mealData);
         if (this.searchTerm == undefined) {
           this.searchedMeals = this.allMeals;
@@ -64,9 +67,7 @@ export class ProductsComponent {
     })
   }
 
-  openDeleteDialog(){
-    
-  }
+
 
   openDialog() {
     this.dialog.open(DialogAddMealComponent);

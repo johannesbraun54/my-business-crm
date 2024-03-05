@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogEditMealHeaderComponent } from '../dialog-edit-meal-header/dialog-edit-meal-header.component';
 import { DialogEditMealDescriptionComponent } from '../dialog-edit-meal-description/dialog-edit-meal-description.component';
 import { DialogEditMealIngredientsComponent } from '../dialog-edit-meal-ingredients/dialog-edit-meal-ingredients.component';
+import { DialogDeleteProductComponent } from '../dialog-delete-product/dialog-delete-product.component';
+import { userService } from '../service/userService.service';
 
 @Component({
   selector: 'app-meal-detail',
@@ -35,7 +37,7 @@ export class MealDetailComponent {
   meal: Meal = new Meal();
   firestore: Firestore = inject(Firestore);
 
-  constructor(public route: ActivatedRoute, public dialog: MatDialog) {
+  constructor(public route: ActivatedRoute, public dialog: MatDialog, public userService: userService) {
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getMeal(this.paramId);
   }
@@ -72,5 +74,10 @@ export class MealDetailComponent {
     this.meal.ingredients.forEach((ingredient: any) => {
       dialog.componentInstance.ingredients.push(ingredient);
     });
+  }
+
+  openDeleteDialog(){
+    const dialog = this.dialog.open(DialogDeleteProductComponent);
+    dialog.componentInstance.deleteMealId = this.paramId;
   }
 }
