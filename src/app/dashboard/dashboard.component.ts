@@ -25,8 +25,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   geocoder;
   zoom = 7;
   chart: any = [];
+  secondChart: any = [];
   labels: any;
-  data: any;
+  salesData: any;
+  quantityData: any;
 
 
   constructor(public userService: userService) {
@@ -42,9 +44,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   async loadData() {
     await this.userService.userListSnap().then(() => {
       setTimeout(() => {
-      console.log('revenues', this.userService.januaryRevenue, this.userService.februaryRevenue, this.userService.marchRevenue,)
-      this.getChart();
-      },1500);
+        console.log('revenues', this.userService.januaryRevenue, this.userService.februaryRevenue, this.userService.marchRevenue,)
+        this.getChart();
+      }, 1500);
     })
   }
 
@@ -52,8 +54,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   }
 
-   ngOnInit() {
-     
+  ngOnInit() {
+
   }
 
   public openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow, location: any) {
@@ -63,8 +65,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getChart() {
-    this.labels = ['Jan', 'Feb', 'Mar'];
-    this.data = {
+    this.labels = ['Jan', 'Feb', 'Mar', 'Apr'];
+    this.salesData = {
       labels: this.labels,
       datasets: [{
         label: 'Sales 2024 in €',
@@ -74,7 +76,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
           'rgba(255, 159, 64, 0.5)',
-
           'rgba(255, 205, 86, 0.5)',
           'rgba(75, 192, 192, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -96,7 +97,47 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     this.chart = new Chart('canvas', {
       type: 'bar',
-      data: this.data,
+      data: this.salesData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    });
+
+
+    this.quantityData = {
+      labels: this.labels,
+      datasets: [{
+        label: 'Verkaufte Produkte 2024 in Stück',
+        data: [this.userService.januaryQuantity, this.userService.februaryQuantity, this.userService.marchQuantity],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(201, 203, 207, 0.5)',
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(255, 159, 64, 0.5)',
+          'rgba(255, 205, 86, 0.5)',
+        ],
+        borderColor: [
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)',
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    this.secondChart = new Chart('secondCanvas', {
+      type: 'bar',
+      data: this.quantityData,
       options: {
         scales: {
           y: {

@@ -15,17 +15,24 @@ export class userService {
   userPurchases: Purchase[] = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
-  januaryPurchases: Purchase[] = [];
-  januaryRevenue!:number; 
-  februaryPurchases: Purchase[] = [];
-  februaryRevenue!:number;
-  marchPurchases: Purchase[] = [];
-  marchRevenue!:number;
-  aprilPurchases: Purchase[] = [];
-  mayPurchases: Purchase[] = [];
-  junePurchases: Purchase[] = [];
+
+  januaryPurchases: any = [];
+  januaryRevenue!: number;
+  januaryQuantity!: number;
+
+  februaryPurchases: any[] = [];
+  februaryRevenue!: number;
+  februaryQuantity!: number;
+
+  marchPurchases: any[] = [];
+  marchRevenue!: number;
+  marchQuantity!: number;
+
+  aprilPurchases: any[] = [];
+  mayPurchases: any[] = [];
+  junePurchases: any[] = [];
   searchTerm!: string;
-  geocoder;  
+  geocoder;
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   mealDeleted = false;
@@ -59,7 +66,7 @@ export class userService {
         if (this.searchTerm == undefined) {
           this.searchedUsers = this.allUsers;
         }
-       // console.log('users',this.allUsers)
+        // console.log('users',this.allUsers)
         this.filterPurchasesByMonth();
       })
       this.contentloaded = true;
@@ -221,6 +228,27 @@ export class userService {
     }
   }
 
+  filterQuantitybyMonth(array: Purchase[]) {
+    let sum = 0;
+    for (let i = 0; i < array.length; i++) {
+      const amounts = array[i].amounts;
+      for (let j = 0; j < amounts.length; j++) {
+        const amount = amounts[j];
+        sum += amount
+      }
+    }
+    return sum
+  }
+
+  getMonthlyTotalRevenue(monthArray: Purchase[]) {
+    let sum = 0;
+    for (let i = 0; i < monthArray.length; i++) {
+      const purchase = monthArray[i];
+      sum += purchase.totalAmount
+    }
+    return sum
+  }
+
   filterPurchasesByMonth() {
     this.januaryPurchases = [];
     this.februaryPurchases = [];
@@ -234,30 +262,20 @@ export class userService {
         if (purchaseTime.includes('Januar')) {
           this.januaryPurchases.push(purchase);
           this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
+          this.januaryQuantity = this.filterQuantitybyMonth(this.januaryPurchases);
         } else if (purchaseTime.includes('Februar')) {
           this.februaryPurchases.push(purchase);
           this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
+          this.februaryQuantity = this.filterQuantitybyMonth(this.februaryPurchases);
         } else if (purchaseTime.includes('März')) {
           this.marchPurchases.push(purchase);
           this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
-        } else if (purchaseTime.includes('April')){
+          this.marchQuantity = this.filterQuantitybyMonth(this.marchPurchases);
+        } else if (purchaseTime.includes('April')) {
           this.aprilPurchases.push(purchase);
         }
       }
     }
-    this.statisticDataLoaded = true;
-    //console.log('januaryTotalPurchases', this.januaryRevenue);
-    //console.log('februaryPurchases', this.februaryRevenue);
-    //console.log('marchPurchases', this.marchRevenue);
-  }
-
-  getMonthlyTotalRevenue(monthArray:Purchase[]){
-    let sum = 0;
-    for (let i = 0; i < monthArray.length; i++) {
-      const purchase = monthArray[i];
-      sum += purchase.totalAmount 
-    }
-    return sum
   }
 
   getUserRef() {
@@ -266,10 +284,6 @@ export class userService {
 
   getProductRef() {
     return collection(this.firestore, 'products');
-  }
-
-  ngonDestroy() {
-    // this.unsubUser();
   }
 }
 

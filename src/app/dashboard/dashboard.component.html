@@ -1,33 +1,46 @@
-<div style="height: 50px;">
-    {{userService.februaryRevenue}}
-    {{userService.marchRevenue}}
-</div>
 
-<div #map class="map-container">
-    <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
-        <ng-container *ngFor="let location of userService.locations">
-            <map-marker  #marker="mapMarker" [position]="location.position" title="{{ location.title }}" (mapClick)="openInfoWindow(marker,infoWindow, location)"></map-marker>
-            <map-info-window #infoWindow="mapInfoWindow">
+<div>
+    <div #map class="map-container">
+        <google-map height="100%"  [center]="center" [zoom]="zoom">
+            <ng-container *ngFor="let location of userService.locations">
+                <map-marker #marker="mapMarker" [position]="location.position" title="{{ location.title }}"
+                    (mapClick)="openInfoWindow(marker,infoWindow, location)"></map-marker>
+                <map-info-window #infoWindow="mapInfoWindow">
                     <img src="../../assets/img/userProfile.png">
                     <span>
                         {{location.content.name}}<br>
                         {{location.content.adress}}<br>
                         {{ location.content.street}}<br>
-                        <a [routerLink]="['/user/' + location.content.customUserId]">zum Kundenprofil</a> 
+                        <a [routerLink]="['/user/' + location.content.customUserId]">zum Kundenprofil</a>
                     </span>
-            </map-info-window>
-        </ng-container>
-    </google-map>
+                </map-info-window>
+            </ng-container>
+        </google-map>
+        <div class="statistic-container">
+            <span>
+                <h1>Gesamt Umsatz 2024</h1>
+                <h2>{{userService.marchRevenue.toFixed(2)}}€</h2>
+            </span>
+            <span>
+                <h1>Gesamt Stückzahl</h1>
+                <h2>{{userService.marchQuantity}}</h2>
+            </span>
+    
+        </div>
+    </div>
+
+
 </div>
+
 
 
 
 <div class="chart-container">
-    <canvas id="canvas">{{chart}}</canvas>
+    <div>
+        <canvas id="canvas">{{chart}}</canvas>
+    </div>
+    <div>
+        <canvas id="secondCanvas">{{chart}}</canvas>
+    </div>
 </div>
-<div class="chart-container">
-    <canvas id="canvas">{{chart}}</canvas>
-</div>
-  
-
 
