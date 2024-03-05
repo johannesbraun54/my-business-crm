@@ -3,6 +3,7 @@ import { User } from "../models/user.class";
 import { Firestore, collection, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Meal } from "../models/meal.class";
 import { Purchase } from "../models/purchase.class";
+import { Location } from "../models/locations.class";
 
 @Injectable({
   providedIn: 'root'
@@ -16,34 +17,25 @@ export class userService {
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
   searchTerm!: string;
-  geocoder = new google.maps.Geocoder();
+  geocoder;   //= new google.maps.Geocoder();
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   mealDeleted = false;
   userDeleted = false;
   contentloaded = false;
-  locations = [
-    {
-      position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier',
-      content: {
-        name: 'Peter Altmaier',
-        adress: " 30159 Hannover",
-        street: "Herschelstraße 5",
-        customUserId: "1EHnz9s0cNfy2rWbCvtG"
-      }
-    },
-  ];
+  newlocation = new Location();
+  locations: Location[] = [];
 
-  location = [{
-    position: { lat: 0.0, lng: 0.0 }, title: 'Peter Altmaier'
-  }]
+  //location = [{
+  //position: { lat: 0.0, lng: 0.0 }, title: 'Peter Altmaier'
+  //}]
 
 
   constructor(public firestore: Firestore) {
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
       this.geocoder = new google.maps.Geocoder();
     } else {
-      console.error('Google Maps API is not available.');
+      console.info('Google Maps API is loading.');
     }
     this.unsubUser = this.userListSnap();
   }
@@ -51,6 +43,7 @@ export class userService {
   async userListSnap() {
     return onSnapshot(this.getUserRef(), (userList) => {
       this.allUsers = [];
+      this.locations = [];
       userList.forEach(userSnap => {
         let customUserId = userSnap.get('customUserId');
         customUserId = userSnap.id;
@@ -70,12 +63,24 @@ export class userService {
 
   searchUserDetail() {
     this.searchedUsers = this.allUsers.filter((user: User) => {
+      if (this.searchCommandIsFound(user)) {
+        return true
+      } else {
+        return false
+      }
+    });
+  }
+
+  searchCommandIsFound(user: User) {
+    if (this.searchTerm) {
       return (
         user.firstName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
         user.lastName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
         user.city.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
       );
-    });
+    } else {
+      return false;
+    }
   }
 
 
@@ -168,40 +173,46 @@ export class userService {
   }
 
   getUserCoordinates(userAdress: string, userData: User) {
-    this.geocoder.geocode({ 'address': userAdress }, (results: any, status) => {
-      if (status === 'OK') {
-        var latitude = results[0].geometry.location.lat();
-        var longitude = results[0].geometry.location.lng();
+    if (this.geocoder) {
+      this.geocoder.geocode({ 'address': userAdress }, (results: any, status) => {
+        if (status === 'OK') {
+          var latitude = results[0].geometry.location.lat();
+          var longitude = results[0].geometry.location.lng();
 
-        this.locations
-          .push({
+          const newLocation = {
             position: { lat: latitude, lng: longitude },
             title: userData.firstName,
             content: {
-              name: userData.firstName + " " + userData.lastName,
-              adress: userData.zipCode + " " + userData.city,
-              street: userData.street,
-              customUserId: userData.customUserId
+                name: userData.firstName + " " + userData.lastName,
+                street: userData.street,
+                adress: userData.zipCode + " " + userData.city,
+                customUserId: userData.customUserId
             }
-          });
-      } else {
-        console.error('Geocode was not successful for the following reason: ' + status);
-      }
-    });
+          }
+
+          this.locations.push(newLocation);
+        }
+        else {
+          console.error('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
   }
 
 
   getSingleUserCoordinates(currentUser: User) {
-    this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status) => {
-      if (status === 'OK') {
-        var latitude = results[0].geometry.location.lat();
-        var longitude = results[0].geometry.location.lng();
+    if (this.geocoder) {
+      this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status) => {
+        if (status === 'OK') {
+          var latitude = results[0].geometry.location.lat();
+          var longitude = results[0].geometry.location.lng();
 
-        this.position = { lat: latitude, lng: longitude }
-      } else {
-        console.error('Geocode was not successful for the following reason: ' + status);
-      }
-    });
+          this.position = { lat: latitude, lng: longitude }
+        } else {
+          console.error('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
   }
 
   getUserRef() {

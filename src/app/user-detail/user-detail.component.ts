@@ -38,7 +38,7 @@ export class UserDetailComponent implements OnInit {
   user: User = new User();
   zoom = 7;
   center!: number;
-  geocoder = new google.maps.Geocoder();
+  geocoder; //new google.maps.Geocoder();
   location =
     { position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier', content: {} };
   panelOpenState = false;
@@ -49,6 +49,11 @@ export class UserDetailComponent implements OnInit {
   constructor(public route: ActivatedRoute, public firestore: Firestore, public dialog: MatDialog, public userService: userService) {
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getUser(this.paramId);
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      this.geocoder = new google.maps.Geocoder();
+    } else {
+      console.info('Google Maps API is loading in user-detail.');
+    }
 
   }
 

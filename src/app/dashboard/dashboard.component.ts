@@ -23,18 +23,20 @@ export class DashboardComponent implements OnInit {
   @ViewChild ('marker',{ static : false})marker!: ElementRef;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
   center: google.maps.LatLngLiteral = { lat: 52.36932553544425, lng: 8.618208610671102 };
-  geocoder = new google.maps.Geocoder(); 
+  geocoder;
   zoom = 7;
-  locations = [ 
-    { position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier', content: {}},
-  ];
   chart: any = []
 
   constructor(public userService: userService){
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+      this.geocoder = new google.maps.Geocoder();
+    } else {
+      console.info('Google Maps API is loading in dashboard.');
+    }
   }
 
   ngOnInit(): void {
-    this.getChart();
+    //this.getChart()
   }
 
   public openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow, location:any) {

@@ -33,6 +33,7 @@ import { userService } from '../service/userService.service';
 })
 export class DialogDeleteUserComponent {
   userId!: string;
+  userName!: string;
   loading = false;
   firestore: Firestore = inject(Firestore);
 
