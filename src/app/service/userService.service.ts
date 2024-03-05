@@ -1,6 +1,8 @@
 import { Injectable, inject } from "@angular/core";
 import { User } from "../models/user.class";
 import { Firestore, collection, onSnapshot, query, where } from '@angular/fire/firestore';
+import { Meal } from "../models/meal.class";
+import { Purchase } from "../models/purchase.class";
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,9 @@ import { Firestore, collection, onSnapshot, query, where } from '@angular/fire/f
 
 export class userService {
   user = new User();
-  allUsers: any = []
-  searchedUsers: any = [];
-  userPurchases: any = [];
+  allUsers: User[] = []
+  searchedUsers: User[] = [];
+  userPurchases: Purchase[] = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
   searchTerm!: string;
@@ -18,7 +20,6 @@ export class userService {
   position = { lat: 0.0, lng: 0.0 };
   unsubUser;
   contentloaded = false;
-  originalArray = [];
   locations = [
     {
       position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier',
@@ -45,26 +46,15 @@ export class userService {
     this.unsubUser = this.userListSnap();
   }
 
-  searchItem() {
-      this.searchedUsers = this.allUsers.filter((user: User) => {
-        return (
-          user.firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          user.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          user.city.toLowerCase().includes(this.searchTerm.toLowerCase())
-        );
-      });
-  }
-
   async userListSnap() {
     return onSnapshot(this.getUserRef(), (userList) => {
       this.allUsers = [];
       userList.forEach(userSnap => {
         let customUserId = userSnap.get('customUserId');
         customUserId = userSnap.id;
-        const userData = userSnap.data()
+        const userData:User = userSnap.data() as User
         userData['customUserId'] = customUserId;
         const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
-        const userName = userData['firstName'] + " " + userData['lastName'];
         this.allUsers.push(userData);
         this.getUserCoordinates(userAdress, userData);
         if (this.searchTerm == undefined) {
@@ -76,17 +66,28 @@ export class userService {
   }
 
 
+  searchUserDetail() {
+    this.searchedUsers = this.allUsers.filter((user: User) => {
+      return (
+        user.firstName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+        user.lastName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+        user.city.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+      );
+    });
+  }
+
+
   structurateUserData(myFilter: string) {
     for (let i = 0; i < this.allUsers.length; i++) {
       let sum = 0;
       const user = this.allUsers[i];
-      this.getTotalRevenue(user ,sum);
+      this.getTotalRevenue(user, sum);
       this.getTotalPurchaseFromUser(user)
     }
     this.filterUser(myFilter)
   }
 
-  getTotalRevenue(user:User ,sum:number){
+  getTotalRevenue(user: User, sum: number) {
     for (let j = 0; j < user.purchases.length; j++) {
       const purchase = user.purchases[j];
       sum += purchase.totalAmount
@@ -94,7 +95,7 @@ export class userService {
     }
   }
 
-  getTotalPurchaseFromUser(user:User){
+  getTotalPurchaseFromUser(user: User) {
     let sum = 0;
     for (let j = 0; j < user.purchases.length; j++) {
       const purchase = user.purchases[j];
@@ -110,46 +111,61 @@ export class userService {
   filterUser(myFilter: string) {
     switch (myFilter) {
       case 'salesUp-1':
-        this.searchedUsers.sort((a: any, b: any) => {
-          if (a.totalRevenue && b.totalRevenue) {
-            return a.totalRevenue - b.totalRevenue;
-          } else {
-            return a.totalRevenue ? 1 : -1;
-          }
-        });
+        this.filterSalesUp();
         break;
       case 'salesDown-2':
-        this.searchedUsers.sort((a: any, b: any) => {
-          if (a.totalRevenue && b.totalRevenue) {
-            return b.totalRevenue - a.totalRevenue
-          } else {
-            return a.totalRevenue ? -1 : 1;
-          }
-        });
+        this.filterSalesDown();
         break;
-        case 'purchasesUp-3':
-        this.searchedUsers.sort((a: any, b: any) => {
-          if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
-            return a.totalPurchasesAmount - b.totalPurchasesAmount
-          } else {
-            return a.totalPurchasesAmount ? 1 : -1;
-          }
-        });
-          break;
-        case 'purchasesDown-4': 
-        this.searchedUsers.sort((a: any, b: any) => {
-          if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
-            return b.totalPurchasesAmount - a.totalPurchasesAmount
-          } else {
-            return a.totalPurchasesAmount ? -1 : 1;
-          }
-        });
+      case 'purchasesUp-3':
+        this.filterPurchasesUp();
         break;
-
+      case 'purchasesDown-4':
+        this.filterPurchasesDown();
+        break;
     }
   }
 
-  getUserCoordinates(userAdress: string, userData: any) {
+  filterSalesUp() {
+    this.searchedUsers.sort((a: User, b: User) => {
+      if (a.totalRevenue && b.totalRevenue) {
+        return a.totalRevenue - b.totalRevenue;
+      } else {
+        return a.totalRevenue ? 1 : -1;
+      }
+    });
+  }
+
+  filterSalesDown() {
+    this.searchedUsers.sort((a: User, b: User) => {
+      if (a.totalRevenue && b.totalRevenue) {
+        return b.totalRevenue - a.totalRevenue
+      } else {
+        return a.totalRevenue ? -1 : 1;
+      }
+    });
+  }
+
+  filterPurchasesUp() {
+    this.searchedUsers.sort((a: User, b: User) => {
+      if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
+        return a.totalPurchasesAmount - b.totalPurchasesAmount
+      } else {
+        return a.totalPurchasesAmount ? 1 : -1;
+      }
+    });
+  }
+
+  filterPurchasesDown() {
+    this.searchedUsers.sort((a: User, b: User) => {
+      if (a.totalPurchasesAmount && b.totalPurchasesAmount) {
+        return b.totalPurchasesAmount - a.totalPurchasesAmount
+      } else {
+        return a.totalPurchasesAmount ? -1 : 1;
+      }
+    });
+  }
+
+  getUserCoordinates(userAdress: string, userData: User) {
     this.geocoder.geocode({ 'address': userAdress }, (results: any, status) => {
       if (status === 'OK') {
         var latitude = results[0].geometry.location.lat();
@@ -173,7 +189,7 @@ export class userService {
   }
 
 
-  getSingleUserCoordinates(currentUser: any) {
+  getSingleUserCoordinates(currentUser: User) {
     this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status) => {
       if (status === 'OK') {
         var latitude = results[0].geometry.location.lat();
@@ -187,7 +203,11 @@ export class userService {
   }
 
   getUserRef() {
-    return collection(this.firestore, "users");
+    return collection(this.firestore, 'users');
+  }
+
+  getProductRef() {
+    return collection(this.firestore, 'products');
   }
 
   ngonDestroy() {

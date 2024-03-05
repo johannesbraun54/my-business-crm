@@ -1,7 +1,7 @@
 <div class="search-container">
     <mat-form-field id="search" class="example-full-width">
         <mat-label>User oder Stadt suchen</mat-label>
-        <input [(ngModel)]="userService.searchTerm" (keyup)="userService.searchItem()" matInput placeholder="User oder Stadt suchen">
+        <input [(ngModel)]="userService.searchTerm" (keyup)="userService.searchUserDetail()" matInput placeholder="User oder Stadt suchen">
       </mat-form-field>
     
     <mat-form-field>

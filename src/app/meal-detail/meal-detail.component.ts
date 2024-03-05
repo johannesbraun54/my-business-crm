@@ -30,46 +30,46 @@ import { DialogEditMealIngredientsComponent } from '../dialog-edit-meal-ingredie
   styleUrl: './meal-detail.component.scss'
 })
 export class MealDetailComponent {
-  paramId: any; 
+  paramId: any;
   singleMeal: any;
-  meal:Meal = new Meal();
+  meal: Meal = new Meal();
   firestore: Firestore = inject(Firestore);
 
-  constructor(public route: ActivatedRoute, public dialog: MatDialog){
+  constructor(public route: ActivatedRoute, public dialog: MatDialog) {
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getMeal(this.paramId);
   }
 
-  getMeal(docId:string){
-    this.singleMeal = onSnapshot(this.getMealRef(docId), ((meal)=> {
+  getMeal(docId: string) {
+    this.singleMeal = onSnapshot(this.getMealRef(docId), ((meal) => {
       this.meal = new Meal(meal.data());
       console.log(this.meal);
     }))
   }
 
-  getMealRef(docId:any){
+  getMealRef(docId: any) {
     return doc(collection(this.firestore, 'meals'), docId);
   }
 
 
-  editMealHeader(){
+  editMealHeader() {
     const dialog = this.dialog.open(DialogEditMealHeaderComponent);
     dialog.componentInstance.meal = new Meal(this.meal.toJson());
     dialog.componentInstance.mealId = this.paramId;
   }
 
-  editMealDescription(){
+  editMealDescription() {
     const dialog = this.dialog.open(DialogEditMealDescriptionComponent);
     dialog.componentInstance.meal = new Meal(this.meal.toJson());
     dialog.componentInstance.mealId = this.paramId;
     dialog.componentInstance.description = this.meal.description;
   }
 
-  editMealIngredients(){
+  editMealIngredients() {
     const dialog = this.dialog.open(DialogEditMealIngredientsComponent);
     dialog.componentInstance.meal = new Meal(this.meal.toJson());
     dialog.componentInstance.mealId = this.paramId;
-    this.meal.ingredients.forEach((ingredient:any) => {
+    this.meal.ingredients.forEach((ingredient: any) => {
       dialog.componentInstance.ingredients.push(ingredient);
     });
   }
