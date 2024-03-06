@@ -1,10 +1,13 @@
-h1{
+h1 {
   margin: 0;
+  font-size: 40px;
 }
 
-h3{
+h3 {
   margin-bottom: 16px;
+  font-size: 22px;
 }
+
 .dashboard-container {
   display: flex;
   justify-content: space-between;
@@ -21,27 +24,29 @@ h3{
   flex-direction: column;
 }
 
-.statistic-container{
+.statistic-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 28%;
   box-sizing: border-box;
+  padding-right: 32px;
 }
 
-.keyfact-container{
+.keyfact-container {
+  width: 100%;
   color: white;
   background-color: #3f52b5;
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 32px;
   box-sizing: border-box;
-  padding-left: 24px;
-  padding-right: 24px;
-  width: 84%;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  h3{
+    margin: 0;
+  }
 }
 
 .keyfacts {
@@ -50,9 +55,8 @@ h3{
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  padding-left: 24px;
-  padding-right: 24px;
   flex-grow: 1;
+
   span {
     text-align: center;
     display: flex;
@@ -65,12 +69,6 @@ h3{
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     min-height: 20%;
-    h3{
-      font-size: 22px;
-    }
-    h1{
-      font-size: 40px;
-    }
   }
 }
 
@@ -120,19 +118,84 @@ map-info-window {
   align-items: end;
   width: 100%;
   height: 45%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  padding: 12px;
+  gap: 16px;
+
   div {
     display: flex;
     width: 48%;
     flex-grow: 1;
     height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
 
     canvas {
-      width: 100%!important;
-      height: 100%!important;
+      width: 100% !important;
+      height: 100% !important;
     }
-
   }
 }
+
+@media(max-width: 1180px){
+  h1 {
+    font-size: 32px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+
+  .statistic-container{
+    padding-right: 0;
+    width: 20%;
+  }
+
+  .first-dash-container {
+    width: 78%;
+  }
+}
+
+@media(max-width:1000px) {
+
+  .dashboard-container {
+    flex-direction: column;
+    padding-top: 0;
+    padding-bottom: 16px;
+  }
+
+  .first-dash-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 16px!important;
+  }
+
+  .keyfacts {
+    flex-direction: unset;
+  }
+
+  .statistic-container {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 16px;
+  }
+
+  .chart-container{
+    div{
+      max-width: 450px;
+    }
+  }
+}
+
+/*@media(max-width: 980px){
+
+  h1 {
+    font-size: 26px;
+  }
+  
+  h3 {
+    font-size: 16px;
+  }
+}*/
