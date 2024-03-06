@@ -22,7 +22,7 @@
             <thead>
                 <tr class="cursor-unset">
                     <th>Name</th>
-                    <th>E-mail</th>
+                    <th class="hide-at-responsive">E-mail</th>
                     <th>City</th>
                 </tr>
             </thead>
@@ -30,7 +30,7 @@
             <tbody>
                 <tr *ngFor="let user of userService.searchedUsers" [routerLink]="['/user/' + user.customUserId]">
                     <td>{{ user.firstName }} {{ user.lastName }}</td>
-                    <td>{{user.email}}</td>
+                    <td class="hide-at-responsive">{{user.email}}</td>
                     <td>{{user.city}}</td>
                 </tr>
             </tbody>

@@ -2,28 +2,27 @@
 <h2 mat-dialog-title>Add User</h2>
 <mat-dialog-content>
 
-    <div>
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Street + House No</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Placeholder">
-          </mat-form-field>
-    </div>
+  <div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Street + House No</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Placeholder">
+    </mat-form-field>
+  </div>
 
-    <div>
-        <mat-form-field class="mr-16" appearance="outline">
-            <mat-label>Zip Code</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Placeholder">
-          </mat-form-field>
+  <div>
+    <mat-form-field class="mr-16" appearance="outline" class="full-width">
+      <mat-label>Zip Code</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Placeholder">
+    </mat-form-field>
 
-          <mat-form-field  appearance="outline">
-            <mat-label>City</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="Placeholder">
-          </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>City</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="Placeholder">
+    </mat-form-field>
+  </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
   <button (click)=" this.dialogRef.close()" mat-button>Cancel</button>
   <button mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
-

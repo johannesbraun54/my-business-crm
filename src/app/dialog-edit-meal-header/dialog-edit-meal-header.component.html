@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-<h2 mat-dialog-title>Add Meal</h2>
+<h2 mat-dialog-title>Edit Meal</h2>
 <mat-dialog-content>
-    <div class="dialogwindow">
+    <div>
         <mat-form-field class="mr-16">
             <mat-label>Meal</mat-label>
             <input [disabled]="loading" [(ngModel)]="meal.mealName" matInput placeholder="Ex. Pizza" value="Sushi">

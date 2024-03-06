@@ -65,7 +65,7 @@
         <mat-expansion-panel-header>
 
             <mat-panel-title>
-                Gesamtüberblick des Kunden
+                Kundenüberblick
             </mat-panel-title>
 
             <mat-panel-description>
@@ -115,18 +115,18 @@
         <div class="mt-32" *ngFor="let purchase of userPurchases">
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-        
+
                     <mat-panel-title>
                         {{purchase.purchaseTime}}
                     </mat-panel-title>
-        
+
                     <mat-panel-description>
                         Gesamtpreis:
                         {{purchase.totalAmount.toFixed(2)}}€
                     </mat-panel-description>
-        
+
                 </mat-expansion-panel-header>
-        
+
                 <div class="purchase-detail" *ngFor="let product of purchase.products; let i = index">
                     <span>
                         {{purchase.amounts[i]}}

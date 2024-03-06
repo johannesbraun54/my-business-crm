@@ -13,6 +13,11 @@ mat-card{
     }
 }
 
+.hide-at-responsive{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
 
 
 .dialog-add-btn{
@@ -64,5 +69,18 @@ mat-card{
     cursor: unset!important;
     &:hover{
         background-color: unset!important;
+    }
+}
+
+@media(max-width:550px){
+    .hide-at-responsive{
+        display: none;
+    }
+
+    .search-container{
+        flex-direction: column;
+        #search{
+            width: 100%;
+        }
     }
 }

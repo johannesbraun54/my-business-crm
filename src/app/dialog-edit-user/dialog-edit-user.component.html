@@ -2,12 +2,12 @@
 <h2 mat-dialog-title>Add User</h2>
 <mat-dialog-content>
     <div>
-        <mat-form-field class="mr-16" appearance="outline">
+        <mat-form-field class="mr-16" appearance="outline" class="full-width">
             <mat-label>First Name</mat-label>
             <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First name">
           </mat-form-field>
 
-          <mat-form-field  appearance="outline">
+          <mat-form-field  appearance="outline" class="full-width">
             <mat-label>Last Name</mat-label>
             <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Last name">
           </mat-form-field>
