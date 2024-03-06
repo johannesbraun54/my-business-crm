@@ -1,8 +1,83 @@
-.map-container {
+h1{
+  margin: 0;
+}
+
+h3{
+  margin-bottom: 16px;
+}
+.dashboard-container {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  height: calc(100vh - 72px);
+  box-sizing: border-box;
+  padding-top: 16px;
+  padding-bottom: 32px;
+}
+
+.first-dash-container {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.statistic-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 28%;
+  box-sizing: border-box;
+}
+
+.keyfact-container{
+  color: white;
+  background-color: #3f52b5;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  box-sizing: border-box;
+  padding-left: 24px;
+  padding-right: 24px;
+  width: 84%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.keyfacts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-left: 24px;
+  padding-right: 24px;
+  flex-grow: 1;
+  span {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #3f52b5;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    min-height: 20%;
+    h3{
+      font-size: 22px;
+    }
+    h1{
+      font-size: 40px;
+    }
+  }
+}
+
+.map-container {
   border-radius: 8px !important;
-  height: 300px;
+  box-sizing: border-box;
+  height: 100%;
   z-index: 2;
   position: relative;
   background-color: white;
@@ -36,27 +111,27 @@ map-info-window {
   }
 }
 
-.statistic-container{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 24px;
-}
+
 
 .chart-container {
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  align-items: end;
   width: 100%;
   height: 45%;
-
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 12px;
   div {
+    display: flex;
     width: 48%;
+    flex-grow: 1;
+    height: auto;
 
     canvas {
-      flex-grow: 1;
+      width: 100%!important;
+      height: 100%!important;
     }
 
   }

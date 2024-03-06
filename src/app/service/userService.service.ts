@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { User } from "../models/user.class";
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { Purchase } from "../models/purchase.class";
@@ -17,20 +17,22 @@ export class userService {
   totalRevenue: number[] = [];
 
   januaryPurchases: any = [];
-  januaryRevenue!: number;
-  januaryQuantity!: number;
+  januaryRevenue: number = 0
+  januaryQuantity: number = 0
 
   februaryPurchases: any[] = [];
-  februaryRevenue!: number;
-  februaryQuantity!: number;
+  februaryRevenue: number = 0
+  februaryQuantity: number = 0
 
   marchPurchases: any[] = [];
-  marchRevenue!: number;
-  marchQuantity!: number;
-
+  marchRevenue: number = 0
+  marchQuantity: number = 0
   aprilPurchases: any[] = [];
   mayPurchases: any[] = [];
   junePurchases: any[] = [];
+
+  totalQuantity!: number;
+  totalSales!: number;
   searchTerm!: string;
   geocoder;
   position = { lat: 0.0, lng: 0.0 };
@@ -49,6 +51,7 @@ export class userService {
       console.info('Google Maps API is loading.');
     }
     this.unsubUser = this.userListSnap();
+
   }
 
   async userListSnap() {
@@ -68,9 +71,14 @@ export class userService {
         }
         // console.log('users',this.allUsers)
         this.filterPurchasesByMonth();
+        this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity
       })
       this.contentloaded = true;
     })
+  }
+
+  calculateTotalSums() {
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity
   }
 
 
@@ -263,19 +271,24 @@ export class userService {
           this.januaryPurchases.push(purchase);
           this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
           this.januaryQuantity = this.filterQuantitybyMonth(this.januaryPurchases);
+
         } else if (purchaseTime.includes('Februar')) {
           this.februaryPurchases.push(purchase);
           this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
           this.februaryQuantity = this.filterQuantitybyMonth(this.februaryPurchases);
+
         } else if (purchaseTime.includes('März')) {
           this.marchPurchases.push(purchase);
           this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
           this.marchQuantity = this.filterQuantitybyMonth(this.marchPurchases);
+
         } else if (purchaseTime.includes('April')) {
           this.aprilPurchases.push(purchase);
         }
       }
     }
+    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue;
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity;
   }
 
   getUserRef() {

@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     } else {
       console.info('Google Maps API is loading in dashboard.');
     }
-    this.userService.filterPurchasesByMonth()
+    //this.userService.filterPurchasesByMonth()
     this.loadData();
   }
 
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.salesData = {
       labels: this.labels,
       datasets: [{
-        label: 'Sales 2024 in €',
+        label: 'Sales in €',
         data: [this.userService.januaryRevenue,
         this.userService.februaryRevenue,
         this.userService.marchRevenue],
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.quantityData = {
       labels: this.labels,
       datasets: [{
-        label: 'Verkaufte Produkte 2024 in Stück',
+        label: 'Verkaufte Produkte in Stück',
         data: [this.userService.januaryQuantity, this.userService.februaryQuantity, this.userService.marchQuantity],
         backgroundColor: [
           'rgba(75, 192, 192, 0.5)',
