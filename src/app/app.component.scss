@@ -34,6 +34,35 @@
     }
 }
 
+.responsive-menu-items{
+    display: none;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0;
+
+    li {
+        padding-left: 16px;
+        padding-right: 16px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        mat-icon {
+            margin-right: 16px;
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        &:focus {
+            outline: none;
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+    }
+}
+
 .sidenav {
     width: 300px;
 }
@@ -80,9 +109,17 @@ mat-toolbar-row {
     }
 }
 
-@media(max-width:980px) {
+@media(max-width:1000px) {
     .mat-drawer-opened {
         width: 100vw !important;
+    }
+
+    .menu-items{
+        display: none;
+    }
+
+    .responsive-menu-items{
+        display: block;
     }
 
 
@@ -90,6 +127,7 @@ mat-toolbar-row {
 
         .mat-icon {
             display: flex;
+            padding-right: 12px;
         }
     }
 

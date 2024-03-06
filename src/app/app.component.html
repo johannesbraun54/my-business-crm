@@ -7,10 +7,16 @@
          </div>
    
          <ul class="menu-items">
-             <li routerLink="/dashboard"><mat-icon>person</mat-icon> Dashboard</li>
-             <li routerLink="/user"><mat-icon>fact_check</mat-icon> User</li>
-             <li routerLink="/products"><mat-icon>shopping_bag</mat-icon> Products</li>
+             <li  routerLink="/dashboard"><mat-icon>person</mat-icon> Dashboard</li>
+             <li  routerLink="/user"><mat-icon>fact_check</mat-icon> User</li>
+             <li  routerLink="/products"><mat-icon>shopping_bag</mat-icon> Products</li>
          </ul>
+
+         <ul class="responsive-menu-items">
+            <li (click)="drawer.close()" routerLink="/dashboard"><mat-icon>person</mat-icon> Dashboard</li>
+            <li (click)="drawer.close()" routerLink="/user"><mat-icon>fact_check</mat-icon> User</li>
+            <li (click)="drawer.close()" routerLink="/products"><mat-icon>shopping_bag</mat-icon> Products</li>
+        </ul>
 
   </mat-drawer>
 
