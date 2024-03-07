@@ -4,7 +4,7 @@ export class Purchase {
     amounts!:number[];
     products!: Meal[];
     prices!: number[];
-    purchaseTime : number;
+    purchaseTime : string;
     totalAmount : number;
 
 

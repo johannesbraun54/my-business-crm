@@ -13,6 +13,7 @@ export class userService {
   allUsers: User[] = []
   searchedUsers: User[] = [];
   userPurchases: Purchase[] = [];
+  arrayForPurchasesUpdate: any = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
 
@@ -112,13 +113,14 @@ export class userService {
     for (let i = 0; i < this.allUsers.length; i++) {
       let sum = 0;
       const user = this.allUsers[i];
-      this.getTotalRevenue(user, sum);
-      this.getTotalPurchaseFromUser(user)
+      this.getTotalRevenue(user);
+      this.getTotalPurchaseFromUser(user);
     }
     this.filterUser(myFilter)
   }
 
-  getTotalRevenue(user: User, sum: number) {
+  getTotalRevenue(user: User) {
+    let sum = 0;
     for (let j = 0; j < user.purchases.length; j++) {
       const purchase = user.purchases[j];
       sum += purchase.totalAmount
@@ -292,6 +294,24 @@ export class userService {
     }
     this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue;
     this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity;
+  }
+
+  newPurchaseToJson(obj: Purchase) {
+    return {
+      amounts: obj.amounts,
+      products: obj.products,
+      prices: obj.prices,
+      purchaseTime: obj.purchaseTime,
+      totalAmount: obj.totalAmount,
+    }
+  }
+
+  getPurchaseToJson(user: User) {
+    this.arrayForPurchasesUpdate = [];
+    user.purchases[0][0].forEach((purchase: Purchase) => {
+      let purchaseAsJson = this.newPurchaseToJson(purchase)
+      this.arrayForPurchasesUpdate.push(purchaseAsJson);
+    })
   }
 
   getUserRef() {

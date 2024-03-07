@@ -28,8 +28,8 @@ export class User {
         if (obj) {
             this.purchases.push(obj.purchases);
         }
-        this.totalRevenue = obj? obj.totalRevenue : 0;
-        this.totalPurchasesAmount = obj? obj.totalPurchasesAmount : 0;
+        this.totalRevenue = obj ? obj.totalRevenue : 0;
+        this.totalPurchasesAmount = obj ? obj.totalPurchasesAmount : 0;
     }
 
     public toJson() {
@@ -44,6 +44,7 @@ export class User {
             customUserId: this.customUserId,
             purchases: this.purchases,
             totalRevenue: this.totalRevenue,
+            totalPurchasesAmount: this.totalPurchasesAmount
         }
     }
 }
