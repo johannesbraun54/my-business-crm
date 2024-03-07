@@ -3,8 +3,8 @@
 </div>
 
 <div class="login-container">
-
     <div class="login-form">
+      <mat-progress-bar *ngIf="authService.loading" mode="indeterminate"></mat-progress-bar>
         <div class="headline">
             <h1>Log in</h1>
         </div>
@@ -25,6 +25,7 @@
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
         </mat-form-field>
+        <mat-error *ngIf="authService.logginFailed">Wrong password, please try it aggain</mat-error>
 
         <button mat-raised-button (click)="login()"  color="primary">Log in</button>
     </div>

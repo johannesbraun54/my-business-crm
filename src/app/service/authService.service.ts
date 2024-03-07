@@ -9,10 +9,11 @@ import { FormControl, Validators } from "@angular/forms";
 })
 
 export class AuthService {
-    loggedIn: boolean = true;
+    loggedIn: boolean = false;
     account = new Account();
     email = new FormControl('', [Validators.required, Validators.email]);
-
+    logginFailed = false
+    loading = false;
     constructor(private router: Router){
    
     }
@@ -20,14 +21,17 @@ export class AuthService {
 
     login(){
         const auth = getAuth();
+        this.loading = true;
         signInWithEmailAndPassword(auth, this.account.email, this.account.password)
         .then( (userCredential) => {
+          this.logginFailed = false;
           this.router.navigateByUrl('dashboard');
           this.loggedIn = true;
+          this.loading = false;
         })
         .catch((error) => {
-          const errorCode = error.code;
-          console.error('login failed',errorCode);
+          this.loading = false;
+          this.logginFailed = true; 
         });
     }
 

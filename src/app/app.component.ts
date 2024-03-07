@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AuthService } from './service/authService.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,8 +33,13 @@ export class AppComponent {
   firestore: Firestore = inject(Firestore);
   @ViewChild('drawer') drawer!: MatDrawer;
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, public router:Router) {
 
+  }
+
+  logout(){
+    this.authService.loggedIn = false;
+    this.router.navigate((['']));
   }
 
   isDrawerOpened(): boolean {

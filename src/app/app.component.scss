@@ -103,8 +103,15 @@
 
 mat-toolbar,
 mat-toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     min-height: 56px;
     height: 56px;
+    span{
+        display: flex;
+        align-items: center;
+    }
 }
 
 .router-container {

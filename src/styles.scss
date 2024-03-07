@@ -38,3 +38,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-form-field{
     margin-top: 6px;
 }
+
+/* CSS für die Scrollleiste */
+::-webkit-scrollbar {
+    width: 4px; /* Breite der Scrollleiste */
+  }
+  
+  /* Track (Schienen) */
+  ::-webkit-scrollbar-track {
+    background: #fff; /* Hintergrundfarbe der Scrollleiste */
+  }
+  
+  /* Griff */
+  ::-webkit-scrollbar-thumb {
+    background-color: #3f52b5; /* Farbe des Scrollleistengriffs */
+    border-radius: 6px; /* Abrundung des Griffs */
+  }
+  
+  /* Hoverzustand der Scrollleiste */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #2a3a8a; /* Farbe des Scrollleistengriffs beim Hover */
+  }
+  
