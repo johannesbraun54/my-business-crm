@@ -124,8 +124,8 @@ export class userService {
     for (let j = 0; j < user.purchases.length; j++) {
       const purchase = user.purchases[j];
       sum += purchase.totalAmount
-      user.totalRevenue = sum
     }
+    user.totalRevenue = sum
   }
 
   getTotalPurchaseFromUser(user: User) {
@@ -136,8 +136,8 @@ export class userService {
         const amount = purchase.amounts[k];
         sum += amount
       }
-      user.totalPurchasesAmount = sum
     }
+    user.totalPurchasesAmount = sum
   }
 
 
