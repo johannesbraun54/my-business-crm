@@ -7,7 +7,7 @@
         <span class="keyfacts">
             <span *ngIf="userService.totalSales">
                 <h3>Gesamt Umsatz</h3>
-                <h1>{{userService.totalSales.toFixed(2)}}€</h1>
+                <h1>{{userService.totalSales.toFixed(2).replace(".", ",")}}€</h1>
             </span>
             <span *ngIf="userService.totalSales">
                 <h3>Gesamanzahl der Kunden</h3>

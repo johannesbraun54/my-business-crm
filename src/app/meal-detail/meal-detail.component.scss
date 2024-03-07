@@ -1,5 +1,6 @@
 .meal-detail-header{
     min-height: 200px;
+    height: 100%;
     color: white;
     background-color:#d0bea6;
     display: flex;
@@ -17,8 +18,12 @@
 }
 
 .meal-details{
-    height: 50%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 200px;
     h2{
         margin-bottom: 0;
     }

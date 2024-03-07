@@ -95,7 +95,7 @@
                 Gesamt Umsatz:
             </span>
             <span>
-                {{ getTotalSumOfPrices().toFixed(2) }}€
+                {{ getTotalSumOfPrices()}}€
             </span>
         </div>
     </mat-expansion-panel>
@@ -122,7 +122,7 @@
 
                     <mat-panel-description>
                         Gesamtpreis:
-                        {{purchase.totalAmount.toFixed(2)}}€
+                        {{purchase.totalAmount.toFixed(2).replace(".",",")}}€
                     </mat-panel-description>
 
                 </mat-expansion-panel-header>
@@ -133,7 +133,7 @@
                         {{product['mealName']}}
                     </span>
                     <span>
-                        {{purchase.prices[i].toFixed(2)}}€
+                        {{purchase.prices[i].toFixed(2).replace(".",",")}}€
                     </span>
                 </div>
             </mat-expansion-panel>

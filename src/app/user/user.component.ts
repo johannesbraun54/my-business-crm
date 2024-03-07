@@ -40,7 +40,6 @@ interface Filter {
 export class UserComponent implements OnInit {
   contentloaded = false;
   selectedValue!: string;
-  searchTerm!: string;
   fireStore: Firestore = inject(Firestore);
   filters: Filter[] = [
     { value: 'salesUp-1', viewValue: 'Umsatz (aufsteigend)' },
@@ -49,7 +48,9 @@ export class UserComponent implements OnInit {
     { value: 'purchasesDown-4', viewValue: 'Käufe (absteigend)' },
   ];
 
-  constructor(public dialog: MatDialog, public userService: userService) { }
+  constructor(public dialog: MatDialog, public userService: userService) { 
+    
+  }
   ngOnInit(): void {
     this.userService.userListSnap();
     if (this.userService.contentloaded) {

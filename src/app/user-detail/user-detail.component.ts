@@ -91,7 +91,7 @@ export class UserDetailComponent implements OnInit {
     for (let num of this.totalRevenue) {
       sum += num
     }
-    return sum
+    return sum.toFixed(2).replace(".", ",")
   }
 
   getTotalAmounts() {

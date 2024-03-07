@@ -9,7 +9,7 @@ a {
 }
 
 .login-container{
-height: calc(100vh - 72px);
+height: calc(100vh - 92px);
 display: flex;
 justify-content: center;
 align-items: center;
@@ -49,4 +49,10 @@ h1{
     right: 64px;
 }
 
+}
+
+@media(max-width: 780px){
+    .login-form{
+        width: 100%;
+    }
 }

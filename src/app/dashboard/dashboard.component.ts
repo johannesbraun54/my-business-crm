@@ -37,15 +37,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     } else {
       console.info('Google Maps API is loading in dashboard.');
     }
-    //this.userService.filterPurchasesByMonth()
     this.loadData();
   }
 
   async loadData() {
     await this.userService.userListSnap().then(() => {
       setTimeout(() => {
-        console.log('revenues', this.userService.januaryRevenue, this.userService.februaryRevenue, this.userService.marchRevenue,)
-        this.getChart();
+          this.getChart();
       }, 1500);
     })
   }

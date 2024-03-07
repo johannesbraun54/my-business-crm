@@ -12,6 +12,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-dialog-edit-meal-ingredients',
@@ -26,7 +27,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NgIf,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIcon],
+    MatIcon,
+    MatIconModule],
   templateUrl: './dialog-edit-meal-ingredients.component.html',
   styleUrl: './dialog-edit-meal-ingredients.component.scss'
 })

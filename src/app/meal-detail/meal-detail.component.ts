@@ -45,7 +45,6 @@ export class MealDetailComponent {
   getMeal(docId: string) {
     this.singleMeal = onSnapshot(this.getMealRef(docId), ((meal) => {
       this.meal = new Meal(meal.data());
-      console.log(this.meal);
     }))
   }
 

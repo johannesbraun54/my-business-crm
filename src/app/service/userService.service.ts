@@ -66,10 +66,9 @@ export class userService {
         const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
         this.allUsers.push(userData);
         this.getUserCoordinates(userAdress, userData);
-        if (this.searchTerm == undefined) {
+        if (this.searchTerm === undefined || '') {
           this.searchedUsers = this.allUsers;
         }
-        // console.log('users',this.allUsers)
         this.filterPurchasesByMonth();
         this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity
       })
@@ -83,13 +82,17 @@ export class userService {
 
 
   searchUserDetail() {
-    this.searchedUsers = this.allUsers.filter((user: User) => {
-      if (this.searchCommandIsFound(user)) {
-        return true
-      } else {
-        return false
-      }
-    });
+    console.log(this.searchTerm);
+    if (this.searchTerm !== undefined) {
+      this.searchedUsers = this.allUsers.filter((user: User) => {
+        return (
+          user.firstName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+          user.lastName.toLowerCase().includes(this.searchTerm.trim().toLowerCase()) ||
+          user.city.toLowerCase().includes(this.searchTerm.trim().toLowerCase())
+        );
+      });
+    }
+
   }
 
   searchCommandIsFound(user: User) {
