@@ -234,7 +234,7 @@ export class userService {
 
           this.position = { lat: latitude, lng: longitude }
         } else {
-          console.error('Geocode was not successful for the following reason: ' + status);
+          console.info('Geocode was not successful for the following reason: ' + status);
         }
       });
     }

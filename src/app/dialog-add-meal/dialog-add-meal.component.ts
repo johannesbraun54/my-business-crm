@@ -7,7 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import { Meal } from '../models/meal.class';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker';

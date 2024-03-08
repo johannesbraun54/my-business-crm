@@ -47,6 +47,9 @@ export class DialogEditMealIngredientsComponent {
 
   async saveMeal(){
     this.loading = true;
+    this.meal.showTextField = false;
+    this.meal.price = Number(this.meal.price);
+    this.meal.remark = "";
     this.meal.ingredients = this.ingredients;
     let docRef = this.getSingleMealRef(this.mealId)
     await updateDoc(docRef, this.meal.toJson())

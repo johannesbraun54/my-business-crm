@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { User } from '../models/user.class';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
@@ -46,7 +46,7 @@ export class DialogAddUserComponent {
   ngOnInit(){}
 
   saveUser(){
-    this.user.birthDate = this.birthDate.getTime();
+    this.user.birthDate = this.birthDate?.getTime();
     this.loading = true;
     addDoc(this.getUserRef(), this.user.toJson())
     .catch((err) => {

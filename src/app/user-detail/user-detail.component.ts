@@ -52,7 +52,6 @@ export class UserDetailComponent implements OnInit {
   constructor(public route: ActivatedRoute, public firestore: Firestore, public dialog: MatDialog, public userService: userService, public authService: AuthService) {
     this.authService.loggedIn = true
     this.paramId = this.route.snapshot.paramMap.get('id');
-    this.getUser(this.paramId);
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
       this.geocoder = new google.maps.Geocoder();
     } else {
@@ -62,21 +61,25 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUser(this.paramId);
     this.userService.filterPurchasesByMonth();
   }
 
   getUser(docId: string) {
-    this.userPurchases = [];
-    this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
-      this.user = new User(user.data());
-      this.userService.getSingleUserCoordinates(this.user);
-      this.user.purchases[0].forEach((purchase: Purchase) => {
-        this.userPurchases.push(purchase);
-      })
-      this.getTotalAmounts();
-      this.getTotalPrice();
-    });
-
+    if (!this.userService.userDeleted) {
+      this.userPurchases = [];
+      this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
+        this.user = new User(user.data());
+        this.userService.getSingleUserCoordinates(this.user);
+        if (this.user.purchases.length > 0) {
+            this.user.purchases[0].forEach((purchase: Purchase) => {
+            this.userPurchases.push(purchase);
+            this.getTotalAmounts();
+            this.getTotalPrice();
+          })
+        }
+      });
+    }
   }
 
   getTotalPrice() {

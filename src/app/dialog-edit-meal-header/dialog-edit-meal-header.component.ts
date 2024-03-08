@@ -40,6 +40,9 @@ export class DialogEditMealHeaderComponent {
   }
 
   async saveMeal() {
+    this.meal.showTextField = false;
+    this.meal.price = Number(this.meal.price);
+    this.meal.remark = "";
     this.loading = true;
     let docRef = this.getSingleMealRef(this.mealId)
     await updateDoc(docRef, this.meal.toJson())

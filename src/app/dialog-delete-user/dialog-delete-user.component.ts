@@ -41,14 +41,15 @@ export class DialogDeleteUserComponent {
 
 
   async deleteUser() {
-    this.userService.userDeleted = true;
     this.loading = true;
+    this.userService.userDeleted = true;
+    this.router.navigate(['/user']);
     await deleteDoc(doc(this.userService.getUserRef(), this.userId)).catch(err => {
       console.error(err)
     }).then(() => {
       this.loading = false;
       this.dialogRef.close();
-      this.router.navigate(['/user'])
+
     })
   }
 }
