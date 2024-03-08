@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Meal } from '../models/meal.class';
-import { DialogDeleteProductComponent } from '../dialog-delete-product/dialog-delete-product.component';
+import { AuthService } from '../service/authService.service';
 
 @Component({
   selector: 'app-products',
@@ -43,8 +43,8 @@ export class ProductsComponent {
   firestore: Firestore = inject(Firestore);
   searchTerm!: string;
   mealId!:string;
-  constructor(public dialog: MatDialog, public userService: userService) {
-
+  constructor(public dialog: MatDialog, public userService: userService, public authService:AuthService) {
+    this.authService.loggedIn = true
     this.mealsnap = onSnapshot(this.getMealsRef(), (mealslist) => {
       this.allMeals = [];
       mealslist.forEach(meal => {

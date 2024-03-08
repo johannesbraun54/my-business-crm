@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Firestore } from '@angular/fire/firestore';
+import { AuthService } from '../service/authService.service';
 
 interface Filter {
   value: string;
@@ -48,8 +49,8 @@ export class UserComponent implements OnInit {
     { value: 'purchasesDown-4', viewValue: 'Käufe (absteigend)' },
   ];
 
-  constructor(public dialog: MatDialog, public userService: userService) { 
-    
+  constructor(public dialog: MatDialog, public userService: userService, public authService: AuthService) { 
+    this.authService.loggedIn = true
   }
   ngOnInit(): void {
     this.userService.userListSnap();

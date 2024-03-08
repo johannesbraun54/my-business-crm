@@ -16,6 +16,8 @@ import { DialogEditMealDescriptionComponent } from '../dialog-edit-meal-descript
 import { DialogEditMealIngredientsComponent } from '../dialog-edit-meal-ingredients/dialog-edit-meal-ingredients.component';
 import { DialogDeleteProductComponent } from '../dialog-delete-product/dialog-delete-product.component';
 import { userService } from '../service/userService.service';
+import { AuthService } from '../service/authService.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-meal-detail',
@@ -27,7 +29,8 @@ import { userService } from '../service/userService.service';
     MatMenuModule,
     DialogAddUserComponent,
     DialogEditAddressComponent,
-    DialogEditUserComponent],
+    DialogEditUserComponent,
+    RouterModule],
   templateUrl: './meal-detail.component.html',
   styleUrl: './meal-detail.component.scss'
 })
@@ -37,7 +40,8 @@ export class MealDetailComponent {
   meal: Meal = new Meal();
   firestore: Firestore = inject(Firestore);
 
-  constructor(public route: ActivatedRoute, public dialog: MatDialog, public userService: userService) {
+  constructor(public route: ActivatedRoute, public dialog: MatDialog, public userService: userService, public authService: AuthService) {
+    this.authService.loggedIn = true
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getMeal(this.paramId);
   }
@@ -75,7 +79,7 @@ export class MealDetailComponent {
     });
   }
 
-  openDeleteDialog(){
+  openDeleteDialog() {
     const dialog = this.dialog.open(DialogDeleteProductComponent);
     dialog.componentInstance.deleteMealId = this.paramId;
   }

@@ -90,7 +90,8 @@
     justify-content: space-between;
 
     .mat-icon {
-        display: none;
+        display: flex;
+        padding-right: 12px;
     }
 }
 
@@ -98,16 +99,20 @@
     height: 56px;
     max-width: 400px;
     width: 100%;
+    object-fit: cover;
 }
 
 
 mat-toolbar,
 mat-toolbar-row {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 56px;
     height: 56px;
+    z-index: 1;
+    left: 0;
     span{
         display: flex;
         align-items: center;
@@ -117,7 +122,7 @@ mat-toolbar-row {
 .router-container {
     padding-left: 56px;
     padding-right: 56px;
-    padding-top: 16px;
+    padding-top: 72px;
 }
 
 @media(max-width:1180px) {
@@ -138,15 +143,6 @@ mat-toolbar-row {
 
     .responsive-menu-items{
         display: block;
-    }
-
-
-    .logo-container {
-
-        .mat-icon {
-            display: flex;
-            padding-right: 12px;
-        }
     }
 
 }

@@ -4,6 +4,8 @@
             <mat-icon>more_vert</mat-icon>
         </button>
 
+        <mat-icon routerLink="/products" class="back-arrow">arrow_back</mat-icon>
+
         <div class="meal-details">
             <h2>{{meal.mealName}}</h2>
             <h3 *ngIf="meal.price">{{meal.price.toFixed(2).replace(".",",")}}€</h3>

@@ -1,10 +1,13 @@
-import { Component, inject } from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { Component } from '@angular/core';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, NgForm } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../service/authService.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 
@@ -12,11 +15,14 @@ import { AuthService } from '../service/authService.service';
   selector: 'app-sign-up',
   standalone: true,
   imports: [FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatButtonModule],
+    MatButtonModule,
+    RouterModule,
+    MatProgressBarModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
@@ -25,17 +31,23 @@ export class SignUpComponent {
   hide = true;
   loading = false;
 
-  
-  constructor(public authService: AuthService) {}
 
-  createAccount(){
-    this.authService.createAccount();
+  constructor(public authService: AuthService) {
+    this.authService.animateFirstTime = true;
+   }
+
+  createAccount(signupForm:NgForm) {
+    if(signupForm.valid && signupForm.submitted){
+      console.log(this.authService.account)
+      this.authService.createAccount()
+    }
+
   }
 
 
-  
-  
-  
+
+
+
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';

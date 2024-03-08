@@ -5,6 +5,7 @@ import { userService } from '../service/userService.service';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { RouterLink } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { AuthService } from '../service/authService.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   quantityData: any;
 
 
-  constructor(public userService: userService) {
+  constructor(public userService: userService, public authService: AuthService) {
+    this.authService.loggedIn = true;
+    this.authService.animateFirstTime = true
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
       this.geocoder = new google.maps.Geocoder();
     } else {

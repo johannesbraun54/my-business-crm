@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/authService.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,7 +19,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressBarModule],
+    MatProgressBarModule,
+    RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

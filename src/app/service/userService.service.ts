@@ -83,7 +83,6 @@ export class userService {
 
 
   searchUserDetail() {
-    console.log(this.searchTerm);
     if (this.searchTerm !== undefined) {
       this.searchedUsers = this.allUsers.filter((user: User) => {
         return (

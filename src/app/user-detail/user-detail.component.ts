@@ -16,6 +16,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { Purchase } from '../models/purchase.class';
 import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
+import { AuthService } from '../service/authService.service';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-user-detail',
   standalone: true,
@@ -28,7 +30,8 @@ import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-u
     DialogEditAddressComponent,
     DialogEditUserComponent,
     GoogleMapsModule,
-    MatExpansionModule],
+    MatExpansionModule,
+    RouterModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
@@ -46,7 +49,8 @@ export class UserDetailComponent implements OnInit {
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
 
-  constructor(public route: ActivatedRoute, public firestore: Firestore, public dialog: MatDialog, public userService: userService) {
+  constructor(public route: ActivatedRoute, public firestore: Firestore, public dialog: MatDialog, public userService: userService, public authService: AuthService) {
+    this.authService.loggedIn = true
     this.paramId = this.route.snapshot.paramMap.get('id');
     this.getUser(this.paramId);
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
