@@ -71,3 +71,21 @@
     }
 
 }
+
+@media(max-width:768px){
+    .sign-up-form{
+        width: 70%;
+    }
+}
+
+@media(max-width:610px){
+    .sign-up-form{
+        width: 90%;
+    }
+}
+
+@media(max-width:400px){
+    .sign-up-form{
+        width: 95%;
+    }
+}

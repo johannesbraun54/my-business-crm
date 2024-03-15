@@ -21,7 +21,7 @@
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>email</mat-label>
-        <input #email="ngModel" [disabled]="loading" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        <input #email="ngModel" [disabled]="loading" pattern="[^@]+@[^\.]+\..+"
           [(ngModel)]="user.email" matInput placeholder="email" name="email" required>
         <mat-error *ngIf="email.invalid && email.touched">Bitte eine gültige Email eingeben
           (jemand&#64;example.de)</mat-error>

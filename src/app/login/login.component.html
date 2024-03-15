@@ -1,11 +1,11 @@
-<div *ngIf="authService.animateFirstTime" class="start-logo">
+<div class="start-logo">
   <img src="../../assets/img/startlogo.png">
 </div>
 
 <div class="login-container">
 
   <div class="signUp-link">
-    Dont have an account?
+    <span> Dont have an account?</span>
     <button mat-raised-button routerLink="/signUp" class="ml-12" color="primary">Sign up</button>
   </div>
 
@@ -38,6 +38,7 @@
     <div class="button-area">
       <button mat-raised-button (click)="login()" color="primary">Log in</button>
       <button mat-raised-button routerLink="/dashboard" color="basic">Guest Login</button>
+      <button class="responsive-sign-up" mat-raised-button routerLink="/signUp" color="primary">Sign up</button>
     </div>
 
   </div>

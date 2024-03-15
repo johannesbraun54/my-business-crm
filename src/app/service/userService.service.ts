@@ -1,14 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { User } from "../models/user.class";
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { DocumentData, Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { Purchase } from "../models/purchase.class";
 import { Location } from "../models/locations.class";
+import { Subject } from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class userService {
+export class userService implements OnDestroy {
   user = new User();
   allUsers: User[] = []
   searchedUsers: User[] = [];
@@ -35,9 +37,10 @@ export class userService {
   totalQuantity!: number;
   totalSales!: number;
   searchTerm!: string;
-  geocoder;
+  geocoder!:any;
   position = { lat: 0.0, lng: 0.0 };
-  unsubUser;
+  unsubUserList!: any;
+  subject = new Subject();
   mealDeleted = false;
   userDeleted = false;
   contentloaded = false;
@@ -45,13 +48,18 @@ export class userService {
   locations: Location[] = [];
   statisticDataLoaded = false;
 
+  allUsersSubject = new Subject<User[]>();
+
   constructor(public firestore: Firestore) {
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
       this.geocoder = new google.maps.Geocoder();
     } else {
       console.info('Google Maps API is loading.');
     }
-    this.unsubUser = this.userListSnap();
+  }
+
+
+  ngOnDestroy(): void {
 
   }
 
@@ -59,26 +67,30 @@ export class userService {
     return onSnapshot(this.getUserRef(), (userList) => {
       this.allUsers = [];
       this.locations = [];
-      userList.forEach(userSnap => {
-        let customUserId = userSnap.get('customUserId');
-        customUserId = userSnap.id;
-        const userData: User = userSnap.data() as User
-        userData['customUserId'] = customUserId;
-        const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
-        this.allUsers.push(userData);
-        this.getUserCoordinates(userAdress, userData);
-        if (this.searchTerm === undefined || '') {
-          this.searchedUsers = this.allUsers;
-        }
+      userList.forEach((userSnap: DocumentData) => {
+        this.getUserData(userSnap);
         this.filterPurchasesByMonth();
-        this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity
       })
       this.contentloaded = true;
+      this.allUsersSubject.next(this.allUsers); // Benachrichtigen Sie die Abonnenten über die aktualisierte Liste der Benutzer
     })
   }
 
   calculateTotalSums() {
     this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity
+  }
+
+  getUserData(userSnap: DocumentData) {
+    let customUserId = userSnap['get']('customUserId');
+    customUserId = userSnap['id'];
+    const userData: User = userSnap['data']() as User
+    userData['customUserId'] = customUserId;
+    const userAdress = userData['zipCode'] + userData['city'] + userData['street'];
+    this.allUsers.push(userData);
+    this.getUserCoordinates(userAdress, userData);
+    if (this.searchTerm === undefined || '') {
+      this.searchedUsers = this.allUsers;
+    }
   }
 
 
@@ -199,7 +211,7 @@ export class userService {
 
   getUserCoordinates(userAdress: string, userData: User) {
     if (this.geocoder) {
-      this.geocoder.geocode({ 'address': userAdress }, (results: any, status) => {
+      this.geocoder.geocode({ 'address': userAdress }, (results: any, status:any) => {
         if (status === 'OK') {
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();
@@ -218,7 +230,7 @@ export class userService {
           this.locations.push(newLocation);
         }
         else {
-          console.error('Geocode was not successful for the following reason: ' + status);
+          console.info('Geocode was not successful for the following reason: ' + status);
         }
       });
     }
@@ -227,7 +239,7 @@ export class userService {
 
   getSingleUserCoordinates(currentUser: User) {
     if (this.geocoder) {
-      this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status) => {
+      this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status:any) => {
         if (status === 'OK') {
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();

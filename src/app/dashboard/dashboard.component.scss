@@ -122,6 +122,8 @@ map-info-window {
 
   div {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 48%;
     flex-grow: 1;
     height: auto;
@@ -129,11 +131,6 @@ map-info-window {
     border-radius: 12px;
     padding: 12px;
     box-sizing: border-box;
-
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-    }
   }
 }
 

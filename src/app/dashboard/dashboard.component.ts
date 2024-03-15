@@ -1,11 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CommonModule } from '@angular/common';
 import { userService } from '../service/userService.service';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, RouterLink } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { AuthService } from '../service/authService.service';
+import { DocumentData } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +17,7 @@ import { AuthService } from '../service/authService.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   latitude!: number;
   longitude!: number;
   userName!: string;
@@ -25,14 +28,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   center: google.maps.LatLngLiteral = { lat: 52.36932553544425, lng: 8.618208610671102 };
   geocoder;
   zoom = 7;
-  chart: any = [];
-  secondChart: any = [];
+  chart: Chart | null = null;
+  secondChart: Chart | null = null;
   labels: any;
   salesData: any;
   quantityData: any;
+  unsubUserList!: any;
+  januaryRevenue: number = 0;
+  februaryRevenue: number = 0
+  marchRevenue: number = 0;
+  januaryQuantity: number = 0;
+  februaryQuantity: number = 0;
+  marchQuantity: number = 0;
+  private ngUnsubscribe;
 
-
-  constructor(public userService: userService, public authService: AuthService) {
+  constructor(public userService: userService, public authService: AuthService, private router: Router) {
     this.authService.loggedIn = true;
     this.authService.animateFirstTime = true
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -40,24 +50,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     } else {
       console.info('Google Maps API is loading in dashboard.');
     }
-    this.loadData();
-  }
-
-  async loadData() {
-    await this.userService.userListSnap().then(() => {
-      setTimeout(() => {
-          this.getChart();
-      }, 1500);
-    })
+    this.ngUnsubscribe = new Subject();
   }
 
   ngAfterViewInit(): void {
 
   }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+    this.userService.userListSnap();
+    this.userService.allUsersSubject.pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((data) => {
+        this.getChart();
+      });
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe = new Subject();
+  }
+
+
 
   public openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow, location: any) {
     infoWindow.open(marker);
@@ -66,6 +80,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    if (this.secondChart) {
+      this.secondChart.destroy();
+    }
     this.labels = ['Jan', 'Feb', 'Mar', 'Apr'];
     this.salesData = {
       labels: this.labels,
@@ -148,8 +168,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
     });
   }
-
-
 
 }
 

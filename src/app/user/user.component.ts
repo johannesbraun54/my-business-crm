@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
     { value: 'purchasesDown-4', viewValue: 'Käufe (absteigend)' },
   ];
 
-  constructor(public dialog: MatDialog, public userService: userService, public authService: AuthService) { 
+  constructor(public dialog: MatDialog, public userService: userService, public authService: AuthService) {
     this.authService.loggedIn = true
   }
   ngOnInit(): void {

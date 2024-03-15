@@ -10,7 +10,7 @@
                 <h1>{{userService.totalSales.toFixed(2).replace(".", ",")}}€</h1>
             </span>
             <span *ngIf="userService.totalSales">
-                <h3>Gesamanzahl der Kunden</h3>
+                <h3>Gesamtanzahl der Kunden</h3>
                 <h1>{{userService.allUsers.length}}</h1>
             </span>
             <span>
@@ -31,7 +31,7 @@
                         <span>
                             {{location.content.name}}<br>
                             {{location.content.adress}}<br>
-                            {{ location.content.street}}<br>
+                            {{location.content.street}}<br>
                             <a [routerLink]="['/user/' + location.content.customUserId]">zum Kundenprofil</a>
                         </span>
                     </map-info-window>
@@ -44,7 +44,7 @@
                 <canvas id="canvas">{{chart}}</canvas>
             </div>
             <div>
-                <canvas id="secondCanvas">{{chart}}</canvas>
+                <canvas id="secondCanvas">{{secondChart}}</canvas>
             </div>
         </div>
 
