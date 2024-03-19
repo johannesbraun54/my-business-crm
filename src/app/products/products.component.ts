@@ -37,10 +37,10 @@ import { AuthService } from '../service/authService.service';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent {
+  firestore: Firestore = inject(Firestore);
   mealsnap;
   allMeals: Meal[] = [];
   searchedMeals: Meal[] = [];
-  firestore: Firestore = inject(Firestore);
   searchTerm!: string;
   mealId!:string;
   constructor(public dialog: MatDialog, public userService: userService, public authService:AuthService) {

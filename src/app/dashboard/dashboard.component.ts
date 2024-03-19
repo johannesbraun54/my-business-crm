@@ -6,7 +6,6 @@ import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { NavigationEnd, RouterLink } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { AuthService } from '../service/authService.service';
-import { DocumentData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -45,7 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(public userService: userService, public authService: AuthService, private router: Router) {
     this.authService.loggedIn = true;
     this.authService.animateFirstTime = true
-    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined' && google) {
       this.geocoder = new google.maps.Geocoder();
     } else {
       console.info('Google Maps API is loading in dashboard.');
@@ -60,7 +59,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   async ngOnInit() {
     this.userService.userListSnap();
     this.userService.allUsersSubject.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((data) => {
+      .subscribe(() => {
         this.getChart();
       });
   }

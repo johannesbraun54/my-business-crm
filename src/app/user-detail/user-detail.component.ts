@@ -41,7 +41,7 @@ export class UserDetailComponent implements OnInit {
   user: User = new User();
   zoom = 7;
   center!: number;
-  geocoder; //new google.maps.Geocoder();
+  geocoder;
   location =
     { position: { lat: 53.131923, lng: 8.730445 }, title: 'Peter Altmaier', content: {} };
   panelOpenState = false;

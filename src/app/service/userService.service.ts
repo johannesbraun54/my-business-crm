@@ -72,7 +72,7 @@ export class userService implements OnDestroy {
         this.filterPurchasesByMonth();
       })
       this.contentloaded = true;
-      this.allUsersSubject.next(this.allUsers); // Benachrichtigen Sie die Abonnenten über die aktualisierte Liste der Benutzer
+      this.allUsersSubject.next(this.allUsers);
     })
   }
 
