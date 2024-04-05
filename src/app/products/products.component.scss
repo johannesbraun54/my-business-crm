@@ -1,0 +1,61 @@
+.dialog-add-btn {
+    position: fixed;
+    right: 56px;
+    bottom: 32px;
+}
+
+.material-icons {
+    line-height: 1.2;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        cursor: pointer;
+
+        td {
+            height: 48px;
+
+            &:first-child {
+                padding-left: 16px;
+            }
+        }
+
+        th {
+            &:first-child {
+                cursor: unset;
+                padding-left: 16px;
+
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+    }
+
+
+    th {
+        color: #646464;
+        font-size: 14px;
+        font-weight: 500px;
+        text-align: start;
+    }
+}
+
+.cursor-unset {
+    cursor: unset !important;
+
+    &:hover {
+        background-color: unset !important;
+    }
+}

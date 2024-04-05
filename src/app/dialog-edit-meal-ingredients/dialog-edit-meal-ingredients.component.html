@@ -1,0 +1,28 @@
+<div class="dialog-container">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <h2 mat-dialog-title>Edit Ingredients</h2>
+    <mat-dialog-content>
+
+        <div class="mb-32">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ingredients</mat-label>
+                <div class="ta-end">
+                    <input [disabled]="loading" [(ngModel)]="meal.ingredients" matInput>
+                    <button mat-button (click)="addIngredient(meal.ingredients)">Add</button>
+                </div>
+            </mat-form-field>
+            <ul *ngFor="let ingredient of ingredients" class="ingredient-items">
+                <li>
+                    {{ingredient}}
+                    <mat-icon (click)="deleteIngredient(ingredient)">delete</mat-icon>
+                </li>
+            </ul>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button (click)=" this.dialogRef.close()" mat-button>Cancel</button>
+        <button mat-button (click)="saveMeal()" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</div>

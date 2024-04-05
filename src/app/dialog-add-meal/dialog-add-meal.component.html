@@ -1,0 +1,54 @@
+<form #mealForm="ngForm">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <h2 mat-dialog-title>Add Meal</h2>
+
+
+    <mat-dialog-content>
+        <div>
+            <mat-form-field class="mr-16">
+                <mat-label>Meal</mat-label>
+                <input #name="ngModel" required minlength="2" [disabled]="loading" [(ngModel)]="meal.mealName" matInput
+                    placeholder="Ex. Pizza" name="name">
+                <mat-error *ngIf="name.invalid && name.touched">Min. 2 Zeichen eingeben</mat-error>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="always">
+                <mat-label>Amount</mat-label>
+                <input #price="ngModel" inputmode="decimal" pattern="[0-9.]*" required [disabled]="loading"
+                    [(ngModel)]="meal.price" matInput class="example-right-align" placeholder="0" name="price">
+                <mat-error *ngIf="price.invalid && price.touched">Gültige Zahl eingeben (5.00)</mat-error>
+                <span matTextPrefix>€&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+        <div class="mb-32">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ingredients</mat-label>
+                <div class="ta-end">
+                    <input [disabled]="loading" [(ngModel)]="meal.ingredients" matInput name="ingredients">
+                    <button mat-button (click)="addIngredient(meal.ingredients)">Add</button>
+                </div>
+            </mat-form-field>
+            <ul *ngFor="let ingredient of ingredient" class="ingredient-items">
+                <li>
+                    {{ingredient}}
+                    <mat-icon (click)="deleteIngredient(ingredient)">delete</mat-icon>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <mat-form-field class="full-width">
+                <mat-label>Leave a description</mat-label>
+                <textarea [disabled]="loading" [(ngModel)]="meal.description" name="description" matInput
+                    placeholder="This Meal is…"></textarea>
+            </mat-form-field>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button name="cancelBtn" (click)=" this.dialogRef.close()" mat-button>Cancel</button>
+        <button name="saveBtn" mat-button [disabled]="!name.valid || !price.valid" (click)="saveMeal()" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</form>

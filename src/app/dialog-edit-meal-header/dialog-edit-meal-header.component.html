@@ -1,0 +1,30 @@
+<form #mealForm="ngForm">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <h2 mat-dialog-title>Add Meal</h2>
+
+
+  <mat-dialog-content>
+    <div>
+      <mat-form-field class="mr-16">
+        <mat-label>Meal</mat-label>
+        <input #name="ngModel" required minlength="2" [disabled]="loading" [(ngModel)]="meal.mealName" matInput
+          placeholder="Ex. Pizza" name="name">
+        <mat-error *ngIf="name.invalid && name.touched">Min. 2 Zeichen eingeben</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always">
+        <mat-label>Amount</mat-label>
+        <input #price="ngModel" inputmode="decimal" pattern="[0-9.]*" required [disabled]="loading"
+            [(ngModel)]="meal.price" matInput class="example-right-align" placeholder="0" name="price">
+        <mat-error *ngIf="price.invalid && price.touched">Gültige Zahl eingeben (5.00)</mat-error>
+        <span matTextPrefix>€&nbsp;</span>
+    </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button name="cancelBtn" (click)=" this.dialogRef.close()" mat-button>Cancel</button>
+    <button name="saveBtn" mat-button [disabled]="!name.valid || !price.valid" (click)="saveMeal()"
+      cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,101 @@
+/* You can add global styles to this file, and also import other style files 
+@import url('https://fonts.googleapis.com/css?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');*/
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.mr-16 {
+    margin-right: 16px;
+}
+
+.ml-12 {
+    margin-left: 12px;
+}
+
+.mt-32 {
+    margin-top: 32px;
+}
+
+.mb-32 {
+    margin-bottom: 32px;
+}
+
+.h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.dialogwindow {
+    min-width: 400px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.ta-end {
+    text-align: end;
+}
+
+.mat-mdc-form-field {
+    margin-top: 6px;
+}
+
+.back-arrow {
+    position: absolute;
+    padding: 10px;
+    left: 0px;
+    top: 0px;
+    &:hover{
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 50%;
+        
+    }
+    &:focus{
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 50%;
+    }
+}
+
+/* CSS für die Scrollleiste */
+::-webkit-scrollbar {
+    width: 4px;
+    /* Breite der Scrollleiste */
+}
+
+/* Track (Schienen) */
+::-webkit-scrollbar-track {
+    background: #fff;
+    /* Hintergrundfarbe der Scrollleiste */
+}
+
+/* Griff */
+::-webkit-scrollbar-thumb {
+    background-color: #3f52b5;
+    /* Farbe des Scrollleistengriffs */
+    border-radius: 6px;
+    /* Abrundung des Griffs */
+}
+
+/* Hoverzustand der Scrollleiste */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2a3a8a;
+    /* Farbe des Scrollleistengriffs beim Hover */
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #e4e4e4 inset !important; /* Hintergrundfarbe auf Weiß setzen */
+}

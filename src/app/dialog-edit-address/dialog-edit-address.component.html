@@ -1,0 +1,37 @@
+<form #addUserForm="ngForm">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <h2 mat-dialog-title>Nutzer hinzufügen</h2>
+  <mat-dialog-content>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Street + House No</mat-label>
+        <input #street="ngModel" minlength="5" [disabled]="loading" [(ngModel)]="user.street" matInput
+          placeholder="Placeholder" name="street" required>
+        <mat-error *ngIf="street.invalid && street.touched">Mindestens 5 Zeichen eingeben</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="mr-16" appearance="outline">
+        <mat-label>Zip Code</mat-label>
+        <input #zipcode="ngModel" pattern="^\d{5}$" [disabled]="loading" [(ngModel)]="user.zipCode" matInput
+          placeholder="Placeholder" name="zipcode" required>
+        <mat-error *ngIf="zipcode.invalid && zipcode.touched">Bitte gültige Postleitzahl eingeben</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input #city="ngModel" minlength="2" [disabled]="loading" [(ngModel)]="user.city" matInput
+          placeholder="Placeholder" name="city" required>
+        <mat-error *ngIf="city.invalid && city.touched">Bitte min 2 Zeichen eingeben</mat-error>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)=" this.dialogRef.close()" mat-button name="cancel">Cancel</button>
+    <button [disabled]="!street.valid || !zipcode.valid || !city.valid " mat-button (click)="saveUser()" cdkFocusInitial
+      name="saveBtn">Save</button>
+  </mat-dialog-actions>
+
+</form>

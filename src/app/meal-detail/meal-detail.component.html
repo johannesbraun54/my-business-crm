@@ -1,0 +1,57 @@
+<mat-card *ngIf="!userService.mealDeleted">
+    <mat-card-content class="meal-detail-header">
+        <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editUserDetails">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-icon routerLink="/products" class="back-arrow">arrow_back</mat-icon>
+
+        <div class="meal-details">
+            <h2>{{meal.mealName}}</h2>
+            <h3 *ngIf="meal.price">{{meal.price.toFixed(2).replace(".",",")}}€</h3>
+        </div>
+
+        <mat-menu #editUserDetails="matMenu">
+            <button (click)="editMealHeader()" mat-menu-item>Edit</button>
+            <button mat-menu-item (click)="openDeleteDialog()">Delete Meal</button>
+        </mat-menu>
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!userService.mealDeleted" class="mt-32">
+    <mat-card-header>
+        <mat-card-title>
+            Description
+            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editAdress">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #editAdress="matMenu">
+                <button mat-menu-item (click)="editMealDescription()">Edit</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        {{ meal.description }}
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!userService.mealDeleted" class="mt-32 mb-32">
+    <mat-card-header>
+        <mat-card-title>
+            Ingredients
+            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editIngredients">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #editIngredients="matMenu">
+                <button (click)="editMealIngredients()" mat-menu-item>Edit</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngFor="let ingredient of meal.ingredients">
+        <ul>
+            <li>{{ingredient}}</li>
+        </ul>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,143 @@
+<mat-card>
+    <mat-card-content class="user-detail-header">
+        <mat-icon routerLink="/user" class="back-arrow">arrow_back</mat-icon>
+        <img src="../../assets/img/userProfile.png">
+        <div class="user-details">
+            <h2>{{ user.firstName}} {{ user.lastName}}</h2><br>
+            {{user.email}}
+        </div>
+
+        <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editUserDetails">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #editUserDetails="matMenu">
+            <button mat-menu-item (click)="editUser()">Edit</button>
+            <button mat-menu-item (click)="openDeleteDialog()">Delete User</button>
+        </mat-menu>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mt-32">
+    <mat-card-header>
+        <mat-card-title>
+            Adresse
+            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editAdress">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #editAdress="matMenu">
+                <button mat-menu-item (click)="editAddress()">Edit</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        {{ user.street }} <br>
+        {{ user.zipCode}}
+        {{ user.city}}
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mt-32">
+    <mat-card-header>
+        <mat-card-title>
+            Wohnort
+            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="editAdress">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #editAdress="matMenu">
+                <button mat-menu-item (click)="editAddress()">Edit</button>
+            </mat-menu>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <google-map height="200px" width="100%" [center]="userService.position" [zoom]="zoom">
+            <ng-container>
+                <map-marker #marker="mapMarker" [position]="userService.position"
+                    title="{{ location.title }}"></map-marker>
+            </ng-container>
+        </google-map>
+    </mat-card-content>
+</mat-card>
+
+<div class="mt-32">
+    <mat-expansion-panel (opened)="panelOpenState = false" (closed)="panelOpenState = true">
+        <mat-expansion-panel-header>
+
+            <mat-panel-title>
+                Kundenüberblick
+            </mat-panel-title>
+
+            <mat-panel-description>
+
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <div class="purchase-detail">
+            <span>
+                Anzahl Bestellungen:
+            </span>
+            <span>
+                {{userPurchases.length}}
+            </span>
+        </div>
+        <div class="purchase-detail">
+            <span>
+                Gekaufte Produkte:
+            </span>
+            <span>
+                {{ getAmountOfBoughtProducts()}}
+            </span>
+        </div>
+        <div class="purchase-detail">
+            <span>
+                Gesamt Umsatz:
+            </span>
+            <span>
+                {{ getTotalSumOfPrices()}}€
+            </span>
+        </div>
+    </mat-expansion-panel>
+</div>
+
+
+
+<div class="mt-32 mb-32">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+
+            <mat-panel-title>
+                Bestellungen
+            </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="mt-32" *ngFor="let purchase of userPurchases">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+
+                    <mat-panel-title>
+                        {{purchase.purchaseTime}}
+                    </mat-panel-title>
+
+                    <mat-panel-description>
+                        Gesamtpreis:
+                        {{purchase.totalAmount.toFixed(2).replace(".",",")}}€
+                    </mat-panel-description>
+
+                </mat-expansion-panel-header>
+
+                <div class="purchase-detail" *ngFor="let product of purchase.products; let i = index">
+                    <span>
+                        {{purchase.amounts[i]}}
+                        {{product['mealName']}}
+                    </span>
+                    <span>
+                        {{purchase.prices[i].toFixed(2).replace(".",",")}}€
+                    </span>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </mat-expansion-panel>
+</div>

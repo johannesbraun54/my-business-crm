@@ -1,0 +1,45 @@
+.ingredient-items{
+    padding: 0px;
+    margin: 0;
+    li{
+        padding-left: 16px; 
+        padding-right:16px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        mat-icon{
+            margin-right: 16px;
+        }
+
+        &:hover{
+            background-color: rgba(0,0,0,0.04); 
+            mat-icon{
+                display: flex;
+            }
+        }
+
+        &:focus{ 
+            outline: none;
+            background-color: rgba(0,0,0,0.04); 
+        }
+
+        mat-icon{
+            display: none;
+            padding: 4px;
+            border-radius: 50%;
+            &:hover{
+                background-color: rgb(222, 222, 222);
+            }
+            
+            
+        }
+    }
+}
+
+@media(max-width: 630px){
+    mat-form-field{
+        width: 100%;
+    }
+}

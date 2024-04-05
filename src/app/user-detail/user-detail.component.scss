@@ -1,0 +1,41 @@
+.user-detail-header{
+    min-height: 200px;
+    color: white;
+    background-color:#d0bea6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+        >img{
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+}
+
+.user-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: 32px;
+    height: 100px;
+    h2{
+        margin-bottom: 0;
+    }
+}
+
+.pin-right-upper-corner{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.mat-expansion-panel-header-description {
+    flex-grow: 1;
+}
+
+.purchase-detail{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

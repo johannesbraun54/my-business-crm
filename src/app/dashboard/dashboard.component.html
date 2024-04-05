@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+    <div class="statistic-container">
+        <span class="keyfact-container" *ngIf="userService.totalSales">
+            <h3>Kennzahlen 2024</h3>
+        </span>
+
+        <span class="keyfacts">
+            <span *ngIf="userService.totalSales">
+                <h3>Gesamt Umsatz</h3>
+                <h1>{{userService.totalSales.toFixed(2).replace(".", ",")}}€</h1>
+            </span>
+            <span *ngIf="userService.totalSales">
+                <h3>Gesamtanzahl der Kunden</h3>
+                <h1>{{userService.allUsers.length}}</h1>
+            </span>
+            <span>
+                <h3>Verkaufte Produkte</h3>
+                <h1>{{userService.totalQuantity}}</h1>
+            </span>
+        </span>
+    </div>
+
+    <div class="first-dash-container">
+        <div class="map-container" #map>
+            <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
+                <ng-container *ngFor="let location of userService.locations">
+                    <map-marker #marker="mapMarker" [position]="location.position" title="{{ location.title }}"
+                        (mapClick)="openInfoWindow(marker,infoWindow, location)"></map-marker>
+                    <map-info-window #infoWindow="mapInfoWindow">
+                        <img src="../../assets/img/userProfile.png">
+                        <span>
+                            {{location.content.name}}<br>
+                            {{location.content.adress}}<br>
+                            {{location.content.street}}<br>
+                            <a [routerLink]="['/user/' + location.content.customUserId]">zum Kundenprofil</a>
+                        </span>
+                    </map-info-window>
+                </ng-container>
+            </google-map>
+        </div>
+
+        <div class="chart-container">
+            <div>
+                <canvas id="canvas">{{chart}}</canvas>
+            </div>
+            <div>
+                <canvas id="secondCanvas">{{secondChart}}</canvas>
+            </div>
+        </div>
+
+    </div>
+</div>

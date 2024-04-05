@@ -1,0 +1,45 @@
+<div class="start-logo">
+  <img src="../../assets/img/startlogo.png">
+</div>
+
+<div class="login-container">
+
+  <div class="signUp-link">
+    <span> Dont have an account?</span>
+    <button mat-raised-button routerLink="/signUp" class="ml-12" color="primary">Sign up</button>
+  </div>
+
+  <div class="login-form">
+    <mat-progress-bar *ngIf="authService.loading" mode="indeterminate"></mat-progress-bar>
+    <div class="headline">
+      <h1>Login</h1>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Enter your email</mat-label>
+      <input [(ngModel)]="authService.account.email" matInput placeholder="yourmail@example.com" [formControl]="email"
+        required>
+      @if (email.invalid) {
+      <mat-error>{{getErrorMessage()}}</mat-error>
+      }
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Enter your password</mat-label>
+      <input [(ngModel)]="authService.account.password" matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-error *ngIf="authService.logginFailed">Wrong password, please try it aggain</mat-error>
+
+    <div class="button-area">
+      <button mat-raised-button (click)="login()" color="primary">Log in</button>
+      <button mat-raised-button routerLink="/dashboard" color="basic">Guest Login</button>
+      <button class="responsive-sign-up" mat-raised-button routerLink="/signUp" color="primary">Sign up</button>
+    </div>
+
+  </div>
+</div>

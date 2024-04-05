@@ -1,0 +1,23 @@
+<form class="description-dialog" #mealForm="ngForm">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <h2 mat-dialog-title>Add Meal</h2>
+
+
+  <mat-dialog-content>
+    <div>
+      <mat-form-field class="full-width">
+        <mat-label>Leave a description</mat-label>
+        <textarea #description="ngModel" minlength="5" required [disabled]="loading" [(ngModel)]="meal.description" name="description" matInput
+          placeholder="This Meal is…"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="description.invalid && description.touched">Bitte mindestens 5 Zeichen eingeben</mat-error>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button name="cancelBtn" (click)=" this.dialogRef.close()" mat-button>Cancel</button>
+    <button name="saveBtn" [disabled]="!description.valid" mat-button (click)="saveMeal()"
+      cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+</form>
+<!--Für diejenigen, die es gerne etwas schärfer mögen. Unser Spicy Jalapeño Burger ist mit einem saftigen Rinderhacksteak, scharfem Pepper-Jack-Käse, eingelegten Jalapeños, frischem Salat, Tomate und Chipotle-Mayonnaise belegt. Serviert auf einem knusprigen Ciabatta-Brötchen.-->

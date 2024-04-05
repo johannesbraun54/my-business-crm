@@ -1,0 +1,15 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<h2 mat-dialog-title>Wollen Sie den User wirklich löschen?</h2>
+<mat-dialog-content>
+
+    <div>
+        Alle Daten des Users werden unwiderruflich gelöscht.
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="dialogRef.close()" mat-button>Cancel</button>
+  <button mat-button (click)="deleteUser()" cdkFocusInitial>Delete</button>
+</mat-dialog-actions>
+

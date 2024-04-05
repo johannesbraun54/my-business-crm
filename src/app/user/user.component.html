@@ -1,0 +1,41 @@
+<div class="search-container">
+    <mat-form-field id="search" class="example-full-width">
+        <mat-label>User oder Stadt suchen</mat-label>
+        <input [(ngModel)]="userService.searchTerm" (keyup)="userService.searchUserDetail()" matInput placeholder="User oder Stadt suchen">
+      </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Filter auswählen</mat-label>
+        <mat-select [(ngModel)]="selectedValue" name="filter">
+            @for (filter of filters; track filter) {
+            <mat-option (click)="userService.structurateUserData(filter.value)" [value]="filter.value">{{filter.viewValue}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <table class="user-table">
+            <thead>
+                <tr class="cursor-unset">
+                    <th>Name</th>
+                    <th class="hide-at-responsive">E-mail</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let user of userService.searchedUsers" [routerLink]="['/user/' + user.customUserId]">
+                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+                    <td class="hide-at-responsive">{{user.email}}</td>
+                    <td>{{user.city}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<button (click)="openDialog()" class="dialog-add-btn" mat-fab color="primary" matTooltip="Add User">
+    <mat-icon>add</mat-icon>
+</button>
