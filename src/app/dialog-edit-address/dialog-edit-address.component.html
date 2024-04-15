@@ -26,6 +26,8 @@
         <mat-error *ngIf="city.invalid && city.touched">Bitte min 2 Zeichen eingeben</mat-error>
       </mat-form-field>
     </div>
+    <mat-error [ngStyle]="{'display': coordinatesChecked && !userService.correctCoordinates ? 'flex' : 'none' }">Die
+      Adresse konnte leider nicht gefunden werden.<br> Bitte eine gültige Adresse eingeben.</mat-error>
 
   </mat-dialog-content>
   <mat-dialog-actions>

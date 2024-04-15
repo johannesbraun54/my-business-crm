@@ -21,8 +21,8 @@
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>email</mat-label>
-        <input #email="ngModel" [disabled]="loading" pattern="[^@]+@[^\.]+\..+"
-          [(ngModel)]="user.email" matInput placeholder="email" name="email" required>
+        <input #email="ngModel" [disabled]="loading" pattern="[^@]+@[^\.]+\..+" [(ngModel)]="user.email" matInput
+          placeholder="email" name="email" required>
         <mat-error *ngIf="email.invalid && email.touched">Bitte eine gültige Email eingeben
           (jemand&#64;example.de)</mat-error>
       </mat-form-field>
@@ -31,8 +31,8 @@
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Birth Date</mat-label>
-        <input #birthdate="ngModel" required [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Placeholder"
-          [matDatepicker]="picker1" name="birthDate">
+        <input #birthdate="ngModel" required [disabled]="loading" [(ngModel)]="birthDate" matInput
+          placeholder="Placeholder" [matDatepicker]="picker1" name="birthDate">
         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
@@ -43,7 +43,8 @@
         <mat-label>Street + House No</mat-label>
         <input #street="ngModel" minlength="5" [disabled]="loading" [(ngModel)]="user.street" matInput
           placeholder="Placeholder" name="street" required>
-        <mat-error *ngIf="street.invalid && street.touched">Mindestens 5 Zeichen eingeben</mat-error>
+        <mat-error *ngIf="street.invalid && street.touched && !coordinatesChecked">Mindestens 5 Zeichen
+          eingeben</mat-error>
       </mat-form-field>
     </div>
 
@@ -52,23 +53,33 @@
         <mat-label>Zip Code</mat-label>
         <input #zipcode="ngModel" pattern="^\d{5}$" [disabled]="loading" [(ngModel)]="user.zipCode" matInput
           placeholder="Placeholder" name="zipcode" required>
-        <mat-error *ngIf="zipcode.invalid && zipcode.touched">Bitte gültige Postleitzahl eingeben</mat-error>
+        <mat-error *ngIf="zipcode.invalid && zipcode.touched && !coordinatesChecked">Bitte gültige Postleitzahl
+          eingeben</mat-error>
+        <mat-error *ngIf="!userService.correctCoordinates && coordinatesChecked">Bitte eine gültige Postleitzahl
+          eingeben </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>City</mat-label>
         <input #city="ngModel" minlength="2" [disabled]="loading" [(ngModel)]="user.city" matInput
           placeholder="Placeholder" name="city" required>
-        <mat-error *ngIf="city.invalid && city.touched">Bitte min 2 Zeichen eingeben</mat-error>
+        <mat-error *ngIf="city.invalid && city.touched && !coordinatesChecked">Bitte min 2 Zeichen eingeben</mat-error>
+        <mat-error *ngIf="!userService.correctCoordinates && coordinatesChecked">Bitte eine gültige Stadt
+          eingeben</mat-error>
       </mat-form-field>
-    </div>
+      <div class="validatedCoordinates">
+        <mat-error [ngStyle]="{'display': coordinatesChecked && !userService.correctCoordinates ? 'flex' : 'none' }">Die
+          Adresse konnte leider nicht gefunden werden.<br> Bitte eine gültige Adresse eingeben.
+        </mat-error>
+      </div>
 
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button (click)=" this.dialogRef.close()" mat-button name="cancel">Cancel</button>
     <button
       [disabled]="!firstname.valid || !lastName.valid || !email.valid || !birthdate.valid || !street.valid || !zipcode.valid || !city.valid "
-      mat-button (click)="saveUser()" cdkFocusInitial name="saveBtn">Save</button>
+      mat-button (click)="getUser()" cdkFocusInitial name="saveBtn">Save</button>
   </mat-dialog-actions>
 
 </form>

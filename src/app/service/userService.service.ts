@@ -41,7 +41,7 @@ export class userService implements OnDestroy {
   totalQuantity!: number;
   totalSales!: number;
   searchTerm!: string;
-  geocoder!:any;
+  geocoder!: any;
   position = { lat: 0.0, lng: 0.0 };
   unsubUserList!: any;
   subject = new Subject();
@@ -50,6 +50,7 @@ export class userService implements OnDestroy {
   contentloaded = false;
   newlocation = new Location();
   locations: Location[] = [];
+  correctCoordinates!: boolean;
   statisticDataLoaded = false;
 
   allUsersSubject = new Subject<User[]>();
@@ -213,9 +214,27 @@ export class userService implements OnDestroy {
     });
   }
 
+  async checkCoordinatesFromNewUser(userAdress: string, user: User) {
+    try {
+      await this.geocoder.geocode({ 'address': userAdress }, (results: any, status: any) => {
+        if (status == "OK") {
+          if (results[0]?.address_components.length >= 8) {
+            this.correctCoordinates = true
+            user.street = results[0].address_components[1].long_name + " " + results[0].address_components[0].long_name;
+            user.city = results[0].address_components[2].long_name;
+            user.zipCode = results[0].address_components[7].long_name;
+          }
+        } else {
+          this.correctCoordinates = false
+        }
+      })
+    } catch (error) { }
+
+  }
+
   getUserCoordinates(userAdress: string, userData: User) {
     if (this.geocoder) {
-      this.geocoder.geocode({ 'address': userAdress }, (results: any, status:any) => {
+      this.geocoder.geocode({ 'address': userAdress }, (results: any, status: any) => {
         if (status === 'OK') {
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();
@@ -243,14 +262,14 @@ export class userService implements OnDestroy {
 
   getSingleUserCoordinates(currentUser: User) {
     if (this.geocoder) {
-      this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status:any) => {
+      this.geocoder.geocode({ 'address': currentUser.zipCode + currentUser.city + currentUser.street }, (results: any, status: any) => {
         if (status === 'OK') {
           var latitude = results[0].geometry.location.lat();
           var longitude = results[0].geometry.location.lng();
 
           this.position = { lat: latitude, lng: longitude }
         } else {
-          console.info('Geocode was not successful for the following reason: ' + status);
+          console.info('Geocode was not successful for single user for the following reason: ' + status);
         }
       });
     }
@@ -277,11 +296,29 @@ export class userService implements OnDestroy {
     return sum
   }
 
-  getMonthlyStats(monthArray:any, purchase:Purchase, monthlyRevenues:number, monthlyQuantity:number){
-    monthArray.push(purchase);
-    monthlyRevenues = this.getMonthlyTotalRevenue(monthArray);
-    monthlyQuantity = this.filterQuantitybyMonth(monthArray);
-    return {monthlyRevenues, monthlyQuantity}
+  getMonthlyStats(purchase: Purchase, purchaseTime: string) {
+    if (purchaseTime.includes('Januar')) {
+      this.januaryPurchases.push(purchase);
+      this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
+      this.januaryQuantity = this.filterQuantitybyMonth(this.januaryPurchases);
+
+    } else if (purchaseTime.includes('Februar')) {
+      this.februaryPurchases.push(purchase);
+      this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
+      this.februaryQuantity = this.filterQuantitybyMonth(this.februaryPurchases);
+
+    } else if (purchaseTime.includes('März')) {
+      this.marchPurchases.push(purchase);
+      this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
+      this.marchQuantity = this.filterQuantitybyMonth(this.marchPurchases);
+
+    } else if (purchaseTime.includes('April')) {
+      this.aprilPurchases.push(purchase);
+      this.aprilRevenue = this.getMonthlyTotalRevenue(this.aprilPurchases);
+      this.aprilQuantity = this.filterQuantitybyMonth(this.aprilPurchases);
+    }
+    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue;
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity;
   }
 
   filterPurchasesByMonth() {
@@ -294,32 +331,9 @@ export class userService implements OnDestroy {
       for (let j = 0; j < user.purchases.length; j++) {
         const purchase = user.purchases[j];
         const purchaseTime = purchase.purchaseTime;
-
-        if (purchaseTime.includes('Januar')) {
-          this.januaryPurchases.push(purchase);
-          this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
-          this.januaryQuantity = this.filterQuantitybyMonth(this.januaryPurchases);
-
-        } else if (purchaseTime.includes('Februar')) {
-          this.februaryPurchases.push(purchase);
-          this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
-          this.februaryQuantity = this.filterQuantitybyMonth(this.februaryPurchases);
-
-        } else if (purchaseTime.includes('März')) {
-          this.marchPurchases.push(purchase);
-          this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
-          this.marchQuantity = this.filterQuantitybyMonth(this.marchPurchases);
-
-        } else if (purchaseTime.includes('April')) {
-          //this.getMonthlyStats(this.aprilPurchases, purchase, this.aprilRevenue, this.aprilQuantity)
-          this.aprilPurchases.push(purchase);
-          this.aprilRevenue = this.getMonthlyTotalRevenue(this.aprilPurchases);
-          this.aprilQuantity = this.filterQuantitybyMonth(this.aprilPurchases);
-        }
+        this.getMonthlyStats(purchase, purchaseTime);
       }
     }
-    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue;
-    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity;
   }
 
   newPurchaseToJson(obj: Purchase) {
@@ -331,13 +345,15 @@ export class userService implements OnDestroy {
       totalAmount: obj.totalAmount,
     }
   }
-
+  ////Warum bekomme ich den fehler, wenn ich versuche zum 2. mal eine falsche adresse zu upaten?
   getPurchaseToJson(user: User) {
     this.arrayForPurchasesUpdate = [];
-    user.purchases[0][0].forEach((purchase: Purchase) => {
-      let purchaseAsJson = this.newPurchaseToJson(purchase)
-      this.arrayForPurchasesUpdate.push(purchaseAsJson);
-    })
+    if (user.purchases[0][0]) {
+      user.purchases[0][0].forEach((purchase: Purchase) => {
+        let purchaseAsJson = this.newPurchaseToJson(purchase)
+        this.arrayForPurchasesUpdate.push(purchaseAsJson);
+      })
+    }
   }
 
   getUserRef() {

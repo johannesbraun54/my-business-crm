@@ -67,17 +67,18 @@ export class UserDetailComponent implements OnInit {
 
   getUser(docId: string) {
     if (!this.userService.userDeleted) {
-      this.userPurchases = [];
       this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
+        this.userPurchases = [];
         this.user = new User(user.data());
         this.userService.getSingleUserCoordinates(this.user);
         if (this.user.purchases.length > 0) {
             this.user.purchases[0].forEach((purchase: Purchase) => {
             this.userPurchases.push(purchase);
-            this.getTotalAmounts();
-            this.getTotalPrice();
           })
+          this.getTotalAmounts();
+          this.getTotalPrice();
         }
+
       });
     }
   }
@@ -102,6 +103,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getTotalAmounts() {
+    this.totalAmountsFromUser = [];
     for (let i = 0; i < this.userPurchases.length; i++) {
       const amounts = this.userPurchases[i].amounts;
       amounts.forEach((amount: number) => {
