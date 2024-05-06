@@ -66,8 +66,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(docId: string) {
-    console.log(this.userService.userDeleted);
-    
     if (!this.userService.userDeleted) {
       this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
         this.userPurchases = [];
