@@ -36,6 +36,9 @@ export class userService implements OnDestroy {
   aprilQuantity: number = 0;
 
   mayPurchases: any[] = [];
+  mayRevenue: number = 0;
+  mayQuantity: number = 0;
+
   junePurchases: any[] = [];
 
   totalQuantity!: number;
@@ -316,9 +319,14 @@ export class userService implements OnDestroy {
       this.aprilPurchases.push(purchase);
       this.aprilRevenue = this.getMonthlyTotalRevenue(this.aprilPurchases);
       this.aprilQuantity = this.filterQuantitybyMonth(this.aprilPurchases);
+
+    } else if (purchaseTime.includes('Mai')) {
+      this.mayPurchases.push(purchase);
+      this.mayRevenue = this.getMonthlyTotalRevenue(this.mayPurchases);
+      this.mayQuantity = this.filterQuantitybyMonth(this.mayPurchases);
     }
-    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue;
-    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity;
+    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue + this.mayRevenue;
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity + this.mayQuantity;
   }
 
   filterPurchasesByMonth() {
@@ -326,6 +334,7 @@ export class userService implements OnDestroy {
     this.februaryPurchases = [];
     this.marchPurchases = [];
     this.aprilPurchases = [];
+    this.mayPurchases = [];
     for (let i = 0; i < this.allUsers.length; i++) {
       const user = this.allUsers[i];
       for (let j = 0; j < user.purchases.length; j++) {
@@ -345,7 +354,7 @@ export class userService implements OnDestroy {
       totalAmount: obj.totalAmount,
     }
   }
-  ////Warum bekomme ich den fehler, wenn ich versuche zum 2. mal eine falsche adresse zu upaten?
+
   getPurchaseToJson(user: User) {
     this.arrayForPurchasesUpdate = [];
     if (user.purchases[0][0]) {
