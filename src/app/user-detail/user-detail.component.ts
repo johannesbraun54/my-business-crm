@@ -66,19 +66,20 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(docId: string) {
+    console.log(this.userService.userDeleted);
+    
     if (!this.userService.userDeleted) {
       this.singleUser = onSnapshot(this.getSingleDocRef(docId), (user) => {
         this.userPurchases = [];
         this.user = new User(user.data());
         this.userService.getSingleUserCoordinates(this.user);
         if (this.user.purchases.length > 0) {
-            this.user.purchases[0].forEach((purchase: Purchase) => {
+          this.user.purchases[0].forEach((purchase: Purchase) => {
             this.userPurchases.push(purchase);
           })
           this.getTotalAmounts();
           this.getTotalPrice();
         }
-
       });
     }
   }

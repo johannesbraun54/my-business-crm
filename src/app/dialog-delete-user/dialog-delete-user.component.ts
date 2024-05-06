@@ -49,6 +49,7 @@ export class DialogDeleteUserComponent {
     }).then(() => {
       this.loading = false;
       this.dialogRef.close();
+      this.userService.userDeleted = false;
 
     })
   }
