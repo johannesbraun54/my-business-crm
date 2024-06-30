@@ -40,6 +40,12 @@ export class userService implements OnDestroy {
   mayQuantity: number = 0;
 
   junePurchases: any[] = [];
+  juneRevenue: number = 0;
+  juneQuantity: number = 0;
+
+  julyPurchases: any[] = [];
+  julyRevenue: number = 0;
+  julyQuantity: number = 0;
 
   totalQuantity!: number;
   totalSales!: number;
@@ -325,8 +331,19 @@ export class userService implements OnDestroy {
       this.mayRevenue = this.getMonthlyTotalRevenue(this.mayPurchases);
       this.mayQuantity = this.filterQuantitybyMonth(this.mayPurchases);
     }
-    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue + this.mayRevenue;
-    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity + this.mayQuantity;
+    else if (purchaseTime.includes('Juni')) {
+      this.junePurchases.push(purchase);
+      this.juneRevenue = this.getMonthlyTotalRevenue(this.junePurchases);
+      this.juneQuantity = this.filterQuantitybyMonth(this.junePurchases);
+    }
+
+    else if (purchaseTime.includes('Juli')) {
+      this.julyPurchases.push(purchase);
+      this.julyRevenue = this.getMonthlyTotalRevenue(this.julyPurchases);
+      this.julyQuantity = this.filterQuantitybyMonth(this.julyPurchases);
+    }
+    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue + this.mayRevenue + this.juneRevenue + this.julyRevenue;
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity + this.mayQuantity + this.juneQuantity + this.julyQuantity;       
   }
 
   filterPurchasesByMonth() {
@@ -335,6 +352,8 @@ export class userService implements OnDestroy {
     this.marchPurchases = [];
     this.aprilPurchases = [];
     this.mayPurchases = [];
+    this.junePurchases = [];
+    this.julyPurchases = [];
     for (let i = 0; i < this.allUsers.length; i++) {
       const user = this.allUsers[i];
       for (let j = 0; j < user.purchases.length; j++) {

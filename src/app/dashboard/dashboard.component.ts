@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.secondChart) {
       this.secondChart.destroy();
     }
-    this.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai'];
+    this.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juni','Juli'];
     this.salesData = {
       labels: this.labels,
       datasets: [{
@@ -105,7 +105,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userService.februaryRevenue,
         this.userService.marchRevenue,
         this.userService.aprilRevenue,
-        this.userService.mayRevenue],
+        this.userService.mayRevenue,
+        this.userService.juneRevenue,
+        this.userService.julyRevenue],
         backgroundColor: this.statsBackgroundColors,
         borderColor: this.statsBorderColors,
         borderWidth: 1
@@ -133,7 +135,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userService.februaryQuantity,
         this.userService.marchQuantity,
         this.userService.aprilQuantity,
-        this.userService.mayQuantity],
+        this.userService.mayQuantity,
+        this.userService.juneQuantity,
+        this.userService.julyQuantity],
         backgroundColor: this.statsBackgroundColors,
         borderColor: this.statsBorderColors,
         borderWidth: 1
