@@ -18,6 +18,7 @@ export class userService implements OnDestroy {
   arrayForPurchasesUpdate: any = [];
   totalAmountsFromUser: number[] = [];
   totalRevenue: number[] = [];
+  currentYear = new Date().getFullYear();
 
   januaryPurchases: any = [];
   januaryRevenue: number = 0;
@@ -46,6 +47,27 @@ export class userService implements OnDestroy {
   julyPurchases: any[] = [];
   julyRevenue: number = 0;
   julyQuantity: number = 0;
+
+  augustPurchases: any[] = [];
+  augustRevenue: number = 0;
+  augustQuantity: number = 0;
+
+  septemberPurchases: any[] = [];
+  septemberRevenue: number = 0;
+  septemberQuantity: number = 0;
+
+  octoberPurchases: any[] = [];
+  octoberRevenue: number = 0;
+  octoberQuantity: number = 0;
+
+  novemberPurchases: any[] = [];
+  novemberRevenue: number = 0;
+  novemberQuantity: number = 0;
+
+  dezemberPurchases: any[] = [];
+  dezemberRevenue: number = 0;
+  dezemberQuantity: number = 0;
+
 
   totalQuantity!: number;
   totalSales!: number;
@@ -306,44 +328,75 @@ export class userService implements OnDestroy {
   }
 
   getMonthlyStats(purchase: Purchase, purchaseTime: string) {
-    if (purchaseTime.includes('Januar')) {
+
+    if (purchaseTime.includes(`Januar ${this.currentYear}`)) {
       this.januaryPurchases.push(purchase);
       this.januaryRevenue = this.getMonthlyTotalRevenue(this.januaryPurchases);
       this.januaryQuantity = this.filterQuantitybyMonth(this.januaryPurchases);
 
-    } else if (purchaseTime.includes('Februar')) {
+    } else if (purchaseTime.includes(`Februar ${this.currentYear}`)) {
       this.februaryPurchases.push(purchase);
       this.februaryRevenue = this.getMonthlyTotalRevenue(this.februaryPurchases);
       this.februaryQuantity = this.filterQuantitybyMonth(this.februaryPurchases);
 
-    } else if (purchaseTime.includes('März')) {
+    } else if (purchaseTime.includes(`März ${this.currentYear}`)) {
       this.marchPurchases.push(purchase);
       this.marchRevenue = this.getMonthlyTotalRevenue(this.marchPurchases);
       this.marchQuantity = this.filterQuantitybyMonth(this.marchPurchases);
 
-    } else if (purchaseTime.includes('April')) {
+    } else if (purchaseTime.includes(`April ${this.currentYear}`)) {
       this.aprilPurchases.push(purchase);
       this.aprilRevenue = this.getMonthlyTotalRevenue(this.aprilPurchases);
       this.aprilQuantity = this.filterQuantitybyMonth(this.aprilPurchases);
 
-    } else if (purchaseTime.includes('Mai')) {
+    } else if (purchaseTime.includes(`Mai ${this.currentYear}`)) {
       this.mayPurchases.push(purchase);
       this.mayRevenue = this.getMonthlyTotalRevenue(this.mayPurchases);
       this.mayQuantity = this.filterQuantitybyMonth(this.mayPurchases);
     }
-    else if (purchaseTime.includes('Juni')) {
+    else if (purchaseTime.includes(`Juni ${this.currentYear}`)) {
       this.junePurchases.push(purchase);
       this.juneRevenue = this.getMonthlyTotalRevenue(this.junePurchases);
       this.juneQuantity = this.filterQuantitybyMonth(this.junePurchases);
     }
 
-    else if (purchaseTime.includes('Juli')) {
+    else if (purchaseTime.includes(`Juli ${this.currentYear}`)) {
       this.julyPurchases.push(purchase);
       this.julyRevenue = this.getMonthlyTotalRevenue(this.julyPurchases);
       this.julyQuantity = this.filterQuantitybyMonth(this.julyPurchases);
     }
-    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue + this.mayRevenue + this.juneRevenue + this.julyRevenue;
-    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity + this.mayQuantity + this.juneQuantity + this.julyQuantity;       
+
+    else if (purchaseTime.includes(`August ${this.currentYear}`)) {
+      this.augustPurchases.push(purchase);
+      this.augustRevenue = this.getMonthlyTotalRevenue(this.augustPurchases);
+      this.augustQuantity = this.filterQuantitybyMonth(this.augustPurchases);
+    }
+
+    else if (purchaseTime.includes(`September ${this.currentYear}`)) {
+      this.septemberPurchases.push(purchase);
+      this.septemberRevenue = this.getMonthlyTotalRevenue(this.septemberPurchases);
+      this.septemberQuantity = this.filterQuantitybyMonth(this.septemberPurchases);
+    }
+
+    else if (purchaseTime.includes(`Oktober ${this.currentYear}`)) {
+      this.octoberPurchases.push(purchase);
+      this.octoberRevenue = this.getMonthlyTotalRevenue(this.octoberPurchases);
+      this.octoberQuantity = this.filterQuantitybyMonth(this.octoberPurchases);
+    }
+
+    else if (purchaseTime.includes(`November ${this.currentYear}`)) {
+      this.novemberPurchases.push(purchase);
+      this.novemberRevenue = this.getMonthlyTotalRevenue(this.novemberPurchases);
+      this.novemberQuantity = this.filterQuantitybyMonth(this.novemberPurchases);
+    }
+    else if (purchaseTime.includes(`Dezember ${this.currentYear}`)) {
+      this.dezemberPurchases.push(purchase);
+      this.dezemberRevenue = this.getMonthlyTotalRevenue(this.dezemberPurchases);
+      this.dezemberQuantity = this.filterQuantitybyMonth(this.dezemberPurchases);
+    }
+
+    this.totalSales = this.januaryRevenue + this.februaryRevenue + this.marchRevenue + this.aprilRevenue + this.mayRevenue + this.juneRevenue + this.julyRevenue + this.augustRevenue + this.septemberRevenue + this.octoberRevenue + this.novemberRevenue + this.dezemberRevenue;
+    this.totalQuantity = this.januaryQuantity + this.februaryQuantity + this.marchQuantity + this.aprilQuantity + this.mayQuantity + this.juneQuantity + this.julyQuantity + this.augustQuantity + this.septemberQuantity + this.octoberQuantity + this.novemberQuantity + this.dezemberQuantity;
   }
 
   filterPurchasesByMonth() {
@@ -354,6 +407,12 @@ export class userService implements OnDestroy {
     this.mayPurchases = [];
     this.junePurchases = [];
     this.julyPurchases = [];
+    this.augustPurchases = [];
+    this.septemberPurchases = [];
+    this.octoberPurchases = [];
+    this.novemberPurchases = [];
+    this.dezemberPurchases = [];
+
     for (let i = 0; i < this.allUsers.length; i++) {
       const user = this.allUsers[i];
       for (let j = 0; j < user.purchases.length; j++) {

@@ -33,8 +33,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   salesData: any;
   quantityData: any;
   unsubUserList!: any;
+  statsBackgroundColors : any;
+  statsBorderColors : any;
 
-  statsBorderColors: string[] = [
+  barChartborderColors: string[] = [
     'rgb(255, 99, 132)',
     'rgb(255, 159, 64)',
     'rgb(255, 205, 86)',
@@ -42,7 +44,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     'rgb(54, 162, 235)',
     'rgb(153, 102, 255)',
     'rgb(201, 203, 207)'];
-  statsBackgroundColors: string[] = [
+  barChartbackgroundColors: string[] = [
     'rgba(255, 99, 132, 0.5)',
     'rgba(255, 159, 64, 0.5)',
     'rgba(255, 205, 86, 0.5)',
@@ -54,7 +56,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public userService: userService, public authService: AuthService, private router: Router) {
     this.authService.loggedIn = true;
-    this.authService.animateFirstTime = true
+    this.authService.animateFirstTime = true;
+    this.setBarChartColours();
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined' && google) {
       this.geocoder = new google.maps.Geocoder();
     } else {
@@ -69,10 +72,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async ngOnInit() {
     this.userService.userListSnap();
-    this.userService.allUsersSubject.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => {
-        this.getChart();
-      });
+      this.userService.allUsersSubject.pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(() => {
+          this.getChart();
+        });
+
   }
 
   ngOnDestroy() {
@@ -89,6 +93,35 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.center = location.position;
   }
 
+  setBarChartColours(){
+    let backgroundColors = []
+    let borderColors = []
+    let date = new Date()
+    let currentMonth = date.getMonth()
+    for (let i = 0; i < currentMonth + 1; i++) {
+      let bordercolour = this.barChartborderColors[i]
+      let backgroundColor = this.barChartbackgroundColors[i];
+      backgroundColors.push(backgroundColor);
+      borderColors.push(bordercolour);
+      this.statsBackgroundColors = backgroundColors;
+      this.statsBorderColors = borderColors;
+    }
+  }
+
+  checkCurrentMonth() {
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+    let date = new Date()
+    let passedMonths = [];
+    let currentMonth = date.getMonth()
+
+    for (let i = 0; i < currentMonth + 1; i++) {
+      const month = months[i];
+      passedMonths.push(month)
+    }
+    this.labels = passedMonths;
+    return passedMonths
+  }
+
   getChart() {
     if (this.chart) {
       this.chart.destroy();
@@ -96,7 +129,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.secondChart) {
       this.secondChart.destroy();
     }
-    this.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Juni','Juli'];
+    this.labels = this.checkCurrentMonth();
     this.salesData = {
       labels: this.labels,
       datasets: [{
@@ -107,7 +140,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userService.aprilRevenue,
         this.userService.mayRevenue,
         this.userService.juneRevenue,
-        this.userService.julyRevenue],
+        this.userService.julyRevenue,
+        this.userService.augustRevenue,
+        this.userService.septemberRevenue,
+        this.userService.octoberRevenue, 
+        this.userService.novemberRevenue,
+        this.userService.dezemberRevenue
+      ],
+
         backgroundColor: this.statsBackgroundColors,
         borderColor: this.statsBorderColors,
         borderWidth: 1
@@ -137,7 +177,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userService.aprilQuantity,
         this.userService.mayQuantity,
         this.userService.juneQuantity,
-        this.userService.julyQuantity],
+        this.userService.julyQuantity,
+        this.userService.augustQuantity,
+        this.userService.septemberQuantity,
+        this.userService.octoberQuantity,
+        this.userService.novemberQuantity,
+        this.userService.dezemberQuantity
+      ],
         backgroundColor: this.statsBackgroundColors,
         borderColor: this.statsBorderColors,
         borderWidth: 1
