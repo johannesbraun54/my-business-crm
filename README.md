@@ -1,5 +1,9 @@
 # TestSimpleCrm
 
+“My Business CRM” is a simple, open-source CRM tool designed for small businesses to manage and optimize customer relationships.
+The project is based on Angular and offers a user-friendly interface that allows users to store, track and analyze customer information.
+It is an easily customizable solution that enables companies to improve their workflows and increase efficiency. This project is related with my other respository:
+https://github.com/johannesbraun54/lieferkommando.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
 
 ## Development server
