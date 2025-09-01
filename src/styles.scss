@@ -2,18 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');*/
 
-// @use "@angular/material" as mat;
-
-// html {
-//   @include mat.theme(
-//     (
-//       color: mat.$violet-palette,
-//       typography: Roboto,
-//       density: 0,
-//     )
-//   );
-// }
-
 html,
 body {
     height: 100%;
@@ -94,7 +82,8 @@ body {
 
 /* Griff */
 ::-webkit-scrollbar-thumb {
-    background-color: #3f52b5;
+    background-color: #d7e3ff
+    ;
     /* Farbe des Scrollleistengriffs */
     border-radius: 6px;
     /* Abrundung des Griffs */
@@ -102,7 +91,7 @@ body {
 
 /* Hoverzustand der Scrollleiste */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #2a3a8a;
+    background-color: #d7e3ff
     /* Farbe des Scrollleistengriffs beim Hover */
 }
 

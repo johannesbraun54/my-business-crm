@@ -25,8 +25,7 @@ import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.compo
         MatProgressBarModule,
         NgIf,
         MatDatepickerModule,
-        MatNativeDateModule,
-        MatIcon],
+        MatNativeDateModule],
     templateUrl: './dialog-edit-meal-header.component.html',
     styleUrl: './dialog-edit-meal-header.component.scss'
 })

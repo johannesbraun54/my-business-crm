@@ -9,12 +9,16 @@
                 <h3>Gesamt Umsatz</h3>
                 <h1>{{userService.totalSales.toFixed(2).replace(".", ",")}}€</h1>
             </span>
+            <span>
+                <h3>Verbunden mit</h3>
+                <a target="_blank" href="https://jb-webdevelopment.com/Lieferkommando"><h1>Lieferkommando</h1></a>
+            </span>
             <span *ngIf="userService.totalSales">
-                <h3>Gesamtanzahl der Kunden</h3>
+                <h3>Kundenanzahl</h3>
                 <h1>{{userService.allUsers.length}}</h1>
             </span>
             <span>
-                <h3>Verkaufte Produkte</h3>
+                <h3>Verkäufe</h3>
                 <h1>{{userService.totalQuantity}}</h1>
             </span>
         </span>

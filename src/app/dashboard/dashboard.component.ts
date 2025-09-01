@@ -42,7 +42,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     'rgb(75, 192, 192)',
     'rgb(54, 162, 235)',
     'rgb(153, 102, 255)',
-    'rgb(201, 203, 207)'];
+    'rgb(201, 203, 207)',
+    'rgb(75, 192, 192)',
+    'rgb(153, 102, 255)',
+
+  ];
   barChartbackgroundColors: string[] = [
     'rgba(255, 99, 132, 0.5)',
     'rgba(255, 159, 64, 0.5)',
@@ -50,7 +54,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     'rgba(75, 192, 192, 0.2)',
     'rgba(54, 162, 235, 0.2)',
     'rgba(153, 102, 255, 0.2)',
-    'rgba(201, 203, 207, 0.2)']
+    'rgba(201, 203, 207, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+  ]
   private ngUnsubscribe;
 
   constructor(public userService: userService, public authService: AuthService, private router: Router) {

@@ -26,9 +26,6 @@ import { RouterModule } from '@angular/router';
         MatIcon,
         MatButtonModule,
         MatMenuModule,
-        DialogAddUserComponent,
-        DialogEditAddressComponent,
-        DialogEditUserComponent,
         RouterModule],
     templateUrl: './meal-detail.component.html',
     styleUrl: './meal-detail.component.scss'

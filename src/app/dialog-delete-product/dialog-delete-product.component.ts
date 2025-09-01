@@ -26,8 +26,7 @@ import { userService } from '../service/userService.service';
         MatProgressBarModule,
         NgIf,
         MatDatepickerModule,
-        MatNativeDateModule,
-        MatIcon],
+        MatNativeDateModule],
     templateUrl: './dialog-delete-product.component.html',
     styleUrl: './dialog-delete-product.component.scss'
 })

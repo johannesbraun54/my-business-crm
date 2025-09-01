@@ -13,15 +13,15 @@ export const appConfig: ApplicationConfig = {
   providers: [MatDatepickerModule, provideRouter(routes),
      provideClientHydration(),
       provideAnimationsAsync(),
-      importProvidersFrom(provideFirebaseApp(() => initializeApp(
+      provideFirebaseApp(() => initializeApp(
     {"projectId": "test-simple-crm",
     "appId":"1:158302719671:web:42384a3c9804679a578732",
     "storageBucket":"test-simple-crm.appspot.com",
     "apiKey":"AIzaSyCa0FVosKXicYGqHbbrMSEBCEqsJl5uUkY",
     "authDomain":"test-simple-crm.firebaseapp.com",
-    "messagingSenderId":"158302719671"}))),
-    importProvidersFrom(provideFirestore(() => getFirestore())), 
-    importProvidersFrom(provideDatabase(() => getDatabase())),
-    importProvidersFrom( provideAuth(() => getAuth())),
+    "messagingSenderId":"158302719671"})),
+    provideFirestore(() => getFirestore()), 
+    provideDatabase(() => getDatabase()),
+    provideAuth(() => getAuth()),
     ],
 };

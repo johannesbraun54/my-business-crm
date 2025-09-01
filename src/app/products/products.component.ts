@@ -25,7 +25,6 @@ import { AuthService } from '../service/authService.service';
         MatIconModule,
         MatTooltipModule,
         MatDialogModule,
-        DialogAddUserComponent,
         MatCardModule,
         RouterLink,
         MatInputModule,

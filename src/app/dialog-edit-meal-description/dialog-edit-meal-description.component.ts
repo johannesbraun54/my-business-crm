@@ -25,8 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatProgressBarModule,
         NgIf,
         MatDatepickerModule,
-        MatNativeDateModule,
-        MatIcon],
+        MatNativeDateModule],
     templateUrl: './dialog-edit-meal-description.component.html',
     styleUrl: './dialog-edit-meal-description.component.scss'
 })
