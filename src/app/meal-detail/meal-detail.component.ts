@@ -20,19 +20,18 @@ import { AuthService } from '../service/authService.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-meal-detail',
-  standalone: true,
-  imports: [MatCardModule,
-    CommonModule,
-    MatIcon,
-    MatButtonModule,
-    MatMenuModule,
-    DialogAddUserComponent,
-    DialogEditAddressComponent,
-    DialogEditUserComponent,
-    RouterModule],
-  templateUrl: './meal-detail.component.html',
-  styleUrl: './meal-detail.component.scss'
+    selector: 'app-meal-detail',
+    imports: [MatCardModule,
+        CommonModule,
+        MatIcon,
+        MatButtonModule,
+        MatMenuModule,
+        DialogAddUserComponent,
+        DialogEditAddressComponent,
+        DialogEditUserComponent,
+        RouterModule],
+    templateUrl: './meal-detail.component.html',
+    styleUrl: './meal-detail.component.scss'
 })
 export class MealDetailComponent {
   paramId: any;

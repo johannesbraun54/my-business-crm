@@ -15,21 +15,20 @@ import { Router } from '@angular/router';
 import { userService } from '../service/userService.service';
 
 @Component({
-  selector: 'app-dialog-delete-user',
-  standalone: true,
-  imports: [CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIcon],
-  templateUrl: './dialog-delete-user.component.html',
-  styleUrl: './dialog-delete-user.component.scss'
+    selector: 'app-dialog-delete-user',
+    imports: [CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIcon],
+    templateUrl: './dialog-delete-user.component.html',
+    styleUrl: './dialog-delete-user.component.scss'
 })
 export class DialogDeleteUserComponent {
   userId!: string;

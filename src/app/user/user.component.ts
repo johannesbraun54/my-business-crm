@@ -22,21 +22,20 @@ interface Filter {
 }
 
 @Component({
-  selector: 'app-user',
-  standalone: true,
-  imports: [CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatCardModule,
-    RouterLink,
-    MatInputModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    FormsModule],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+    selector: 'app-user',
+    imports: [CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatCardModule,
+        RouterLink,
+        MatInputModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        FormsModule],
+    templateUrl: './user.component.html',
+    styleUrl: './user.component.scss'
 })
 export class UserComponent implements OnInit {
   contentloaded = false;

@@ -14,21 +14,20 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
-  selector: 'app-dialog-add-meal',
-  standalone: true,
-  imports: [CommonModule,
-    MatDialogModule, 
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIcon],
-  templateUrl: './dialog-add-meal.component.html',
-  styleUrl: './dialog-add-meal.component.scss'
+    selector: 'app-dialog-add-meal',
+    imports: [CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIcon],
+    templateUrl: './dialog-add-meal.component.html',
+    styleUrl: './dialog-add-meal.component.scss'
 })
 export class DialogAddMealComponent {
   loading = false;

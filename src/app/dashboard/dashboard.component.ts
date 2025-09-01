@@ -10,11 +10,10 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [GoogleMapsModule, CommonModule, GoogleMap, MapInfoWindow, MapMarker, RouterLink,],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    imports: [GoogleMapsModule, CommonModule, GoogleMap, MapInfoWindow, MapMarker, RouterLink,],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   latitude!: number;

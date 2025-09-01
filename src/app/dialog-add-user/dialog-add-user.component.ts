@@ -17,21 +17,19 @@ import { userService } from '../service/userService.service';
 
 
 @Component({
-  selector: 'app-dialog-add-user',
-  standalone: true,
-  imports: [MatDialogModule,
-    CommonModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule],
-  templateUrl: './dialog-add-user.component.html',
-  styleUrl: './dialog-add-user.component.scss',
-
+    selector: 'app-dialog-add-user',
+    imports: [MatDialogModule,
+        CommonModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule],
+    templateUrl: './dialog-add-user.component.html',
+    styleUrl: './dialog-add-user.component.scss'
 })
 export class DialogAddUserComponent {
   user = new User();

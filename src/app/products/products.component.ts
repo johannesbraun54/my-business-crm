@@ -19,22 +19,21 @@ import { Meal } from '../models/meal.class';
 import { AuthService } from '../service/authService.service';
 
 @Component({
-  selector: 'app-products',
-  standalone: true,
-  imports: [CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDialogModule,
-    DialogAddUserComponent,
-    MatCardModule,
-    RouterLink,
-    MatInputModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    FormsModule],
-  templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+    selector: 'app-products',
+    imports: [CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatDialogModule,
+        DialogAddUserComponent,
+        MatCardModule,
+        RouterLink,
+        MatInputModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        FormsModule],
+    templateUrl: './products.component.html',
+    styleUrl: './products.component.scss'
 })
 export class ProductsComponent {
   firestore: Firestore = inject(Firestore);

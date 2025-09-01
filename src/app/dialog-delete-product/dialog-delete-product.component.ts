@@ -16,21 +16,20 @@ import { userService } from '../service/userService.service';
 
 
 @Component({
-  selector: 'app-dialog-delete-product',
-  standalone: true,
-  imports: [CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIcon],
-  templateUrl: './dialog-delete-product.component.html',
-  styleUrl: './dialog-delete-product.component.scss'
+    selector: 'app-dialog-delete-product',
+    imports: [CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIcon],
+    templateUrl: './dialog-delete-product.component.html',
+    styleUrl: './dialog-delete-product.component.scss'
 })
 export class DialogDeleteProductComponent {
   loading = false;

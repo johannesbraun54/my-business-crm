@@ -12,18 +12,17 @@ import { userService } from '../service/userService.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog-edit-address',
-  standalone: true,
-  imports: [MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    CommonModule],
-  templateUrl: './dialog-edit-address.component.html',
-  styleUrl: './dialog-edit-address.component.scss'
+    selector: 'app-dialog-edit-address',
+    imports: [MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        CommonModule],
+    templateUrl: './dialog-edit-address.component.html',
+    styleUrl: './dialog-edit-address.component.scss'
 })
 export class DialogEditAddressComponent {
   user = new User();

@@ -14,21 +14,19 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { userService } from '../service/userService.service';
 
 @Component({
-  selector: 'app-dialog-edit-user',
-  standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,],
-  templateUrl: './dialog-edit-user.component.html',
-  styleUrl: './dialog-edit-user.component.scss',
-
+    selector: 'app-dialog-edit-user',
+    providers: [provideNativeDateAdapter()],
+    imports: [MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,],
+    templateUrl: './dialog-edit-user.component.html',
+    styleUrl: './dialog-edit-user.component.scss'
 })
 export class DialogEditUserComponent {
   user = new User();

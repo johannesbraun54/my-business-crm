@@ -13,20 +13,18 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule,
-    RouterOutlet,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    RouterModule,
-    MatDatepickerModule,
-    MatNativeDateModule]
-  ,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  providers: [MatDatepickerModule],
+    selector: 'app-root',
+    imports: [CommonModule,
+        RouterOutlet,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        RouterModule,
+        MatDatepickerModule,
+        MatNativeDateModule],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    providers: [MatDatepickerModule]
 })
 export class AppComponent {
   title = 'simple-crm';

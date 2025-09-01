@@ -15,21 +15,20 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 
 @Component({
-  selector: 'app-dialog-edit-meal-description',
-  standalone: true,
-  imports: [CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIcon],
-  templateUrl: './dialog-edit-meal-description.component.html',
-  styleUrl: './dialog-edit-meal-description.component.scss'
+    selector: 'app-dialog-edit-meal-description',
+    imports: [CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIcon],
+    templateUrl: './dialog-edit-meal-description.component.html',
+    styleUrl: './dialog-edit-meal-description.component.scss'
 })
 export class DialogEditMealDescriptionComponent {
   mealId!: string;

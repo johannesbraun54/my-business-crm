@@ -19,21 +19,20 @@ import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-u
 import { AuthService } from '../service/authService.service';
 import { RouterModule } from '@angular/router';
 @Component({
-  selector: 'app-user-detail',
-  standalone: true,
-  imports: [MatCardModule,
-    CommonModule,
-    MatIcon,
-    MatButtonModule,
-    MatMenuModule,
-    DialogAddUserComponent,
-    DialogEditAddressComponent,
-    DialogEditUserComponent,
-    GoogleMapsModule,
-    MatExpansionModule,
-    RouterModule],
-  templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.scss'
+    selector: 'app-user-detail',
+    imports: [MatCardModule,
+        CommonModule,
+        MatIcon,
+        MatButtonModule,
+        MatMenuModule,
+        DialogAddUserComponent,
+        DialogEditAddressComponent,
+        DialogEditUserComponent,
+        GoogleMapsModule,
+        MatExpansionModule,
+        RouterModule],
+    templateUrl: './user-detail.component.html',
+    styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent implements OnInit {
   paramId: any;

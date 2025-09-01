@@ -12,19 +12,18 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @Component({
-  selector: 'app-sign-up',
-  standalone: true,
-  imports: [FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatButtonModule,
-    RouterModule,
-    MatProgressBarModule],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+    selector: 'app-sign-up',
+    imports: [FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatButtonModule,
+        RouterModule,
+        MatProgressBarModule],
+    templateUrl: './sign-up.component.html',
+    styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
   email = new FormControl('', [Validators.required, Validators.email]);

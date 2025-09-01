@@ -15,21 +15,20 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 
 @Component({
-  selector: 'app-dialog-edit-meal-header',
-  standalone: true,
-  imports: [CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatProgressBarModule,
-    NgIf,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatIcon],
-  templateUrl: './dialog-edit-meal-header.component.html',
-  styleUrl: './dialog-edit-meal-header.component.scss'
+    selector: 'app-dialog-edit-meal-header',
+    imports: [CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatProgressBarModule,
+        NgIf,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatIcon],
+    templateUrl: './dialog-edit-meal-header.component.html',
+    styleUrl: './dialog-edit-meal-header.component.scss'
 })
 export class DialogEditMealHeaderComponent {
   mealId!: string;
