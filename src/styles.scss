@@ -2,6 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');*/
 
+// @use "@angular/material" as mat;
+
+// html {
+//   @include mat.theme(
+//     (
+//       color: mat.$violet-palette,
+//       typography: Roboto,
+//       density: 0,
+//     )
+//   );
+// }
+
 html,
 body {
     height: 100%;
